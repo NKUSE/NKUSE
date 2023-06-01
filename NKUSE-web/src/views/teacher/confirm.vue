@@ -14,6 +14,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -29,7 +30,6 @@ export default {
       // 返回上页的逻辑
     },
     confirm() {
-      // 点击确认按钮的逻辑
     },
     cancel() {
       // 点击取消按钮的逻辑
