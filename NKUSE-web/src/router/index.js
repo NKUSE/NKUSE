@@ -173,14 +173,14 @@ export const constantRoutes = [
   },
 
   {
-    path: '/search',
+    path: '/tea_confirm',
     component: Layout,
     children: [
       {
-        path: 'search',
-        name: 'search',
-        component: () => import('@/views/search/index'),
-        meta: { title: 'search', icon: 'search' }
+        path: 'tea_confirm',
+        name: '教师确认',
+        component: () => import('@/views/tea_confirm/index'),
+        meta: { title: '教师确认'}
       }
     ]
   },
