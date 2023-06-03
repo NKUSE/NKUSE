@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="header">
-      <button @click="goBack">返回上页</button>
+      <el-button type="primary" plain @click="goBack">返回上页</el-button>
     </div>
     <div class="content">
       <div class="section">
@@ -23,25 +23,26 @@
         </select>
       </div>
       <div class="actions">
-        <button @click="confirm">确认</button>
-        <button @click="cancel">取消</button>
-      </div>
-    </div>
-    <el-dialog
-    title="提示"
-    :visible.sync="dialogVisible"
-    width="30%"
-    :before-close="handleClose">
-    <div class="content">
-      <div class="info">
-        <p>时间: {{ time }}</p>
-        <p>地点: {{ location }}</p>
-      </div>
-      <div class="actions">
         <el-button type="primary" plain @click="confirm">确认</el-button>
         <el-button type="primary" plain @click="cancel">取消</el-button>
       </div>
     </div>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="25%"
+      :before-close="handleClose"
+    >
+      <div class="dialog-content">
+        <div class="info">
+          <p>时间: {{ this.selectedTime }}</p>
+          <p>地点: {{ this.selectedLocation }}</p>
+        </div>
+        <div class="dialog-actions">
+          <el-button type="primary" plain @click="dialog_confirm">确认</el-button>
+          <el-button type="primary" plain @click="dialog_cancel">取消</el-button>
+        </div>
+      </div>
     </el-dialog>
   </div>
 
@@ -67,23 +68,36 @@ export default {
   methods: {
     goBack() {
       // 返回上页的逻辑
+      this.$router.push('/dashboard');
     },
     confirm() {
-      // 点击确认按钮的逻辑,弹出表格
-      this.dialogVisible=true;
       // 点击确认按钮的逻辑
       if (this.selectedExam && this.selectedTime && this.selectedLocation) {
+        // 点击确认按钮的逻辑,弹出表格
+        this.dialogVisible=true;
         // 执行确认操作
-        console.log('确认');
 
       } else {
         // 未选择完整信息
-        console.log('请选择完整信息');
+        this.$message('请选择完整信息');
       }
     },
     cancel() {
       // 点击取消按钮的逻辑
-      console.log('取消');
+        this.selectedExam = null;
+        this.selectedTime = null;
+        this.selectedLocation = null;
+        console.log('cancel');
+    },
+    dialog_confirm(){
+      this.$router.push('/dashboard');
+    },
+    dialog_cancel(){
+      this.selectedExam = null;
+      this.selectedTime = null;
+      this.selectedLocation = null;
+      this.dialogVisible=false;
+      console.log('dialog_cancel');
     },
   },
 };
@@ -103,6 +117,13 @@ export default {
   margin-top: 50px;
 }
 
+.dialog-content {
+  text-align: center;
+  margin: 20px;
+}
+.info {
+  margin-bottom: 20px;
+}
 .section {
   margin-bottom: 20px;
 }
@@ -110,4 +131,10 @@ export default {
 .actions button {
   margin: 5px;
 }
+
+.dialog-actions {
+  display: flex;
+  justify-content: center;
+}
+
 </style>

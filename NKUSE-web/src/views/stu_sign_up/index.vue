@@ -77,30 +77,66 @@ import userAPI from '@/api/stu_sign_up'
 export default {
   data() {
     return {
+      selectedProvince: '',
+      selectedCity: '',
+      cities: [],
       stu_sign_up:{
-        selectedProvince: '',
-        selectedCity: '',
-        cities: [],
         stu_name: '',
         stu_id: '',
         stu_phone: '',
         stu_email: '',
       },
-      rules:{
-        stu_name: [
-          { required: true, message: '请输入姓名', trigger: 'blur' },
-          { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
-        ],
-        stu_id: [
-          { required: true, message: '请输入身份证号', trigger: 'blur' },
-        ],
-        stu_phone: [
-          { required: true, message: '请输入手机号', trigger: 'blur' },
-        ],
-        stu_email: [
-          { required: true, message: '请输入电子邮件', trigger: 'blur' },
-        ],
-      },
+    rules: {
+      stu_name: [
+        { required: true, message: '请输入姓名', trigger: 'blur' },
+        { min: 3, max: 10, message: '长度在 3 到 10 个字符', trigger: 'blur' }
+      ],
+      stu_id: [
+        { required: true, message: '请输入身份证号', trigger: 'blur' },
+        {
+          validator: (rule, value, callback) => {
+            if (!value) {
+              callback(new Error('请输入身份证号'));
+            } else if (!/^(\d{15}$|^\d{18}$|^\d{17}(\d|X|x))$/.test(value)) {
+              callback(new Error('身份证号格式不正确'));
+            } else {
+              callback();
+            }
+          },
+          trigger: 'blur'
+        }
+      ],
+      stu_phone: [
+        { required: true, message: '请输入手机号', trigger: 'blur' },
+        {
+          validator: (rule, value, callback) => {
+            if (!value) {
+              callback(new Error('请输入手机号'));
+            } else if (!/^[1][3-9]\d{9}$/.test(value)) {
+              callback(new Error('手机号格式不正确'));
+            } else {
+              callback();
+            }
+          },
+          trigger: 'blur'
+        }
+      ],
+      stu_email: [
+        { required: true, message: '请输入电子邮件', trigger: 'blur' },
+        {
+          validator: (rule, value, callback) => {
+            if (!value) {
+              callback(new Error('请输入电子邮件'));
+            } else if (!/^[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*@[A-Za-z0-9]+([-_.][A-Za-z0-9]+)*\.[A-Za-z]{2,4}$/.test(value)) {
+              callback(new Error('电子邮件格式不正确'));
+            } else {
+              callback();
+            }
+          },
+          trigger: 'blur'
+        }
+      ],
+    },
     };
   },
   methods: {
@@ -113,6 +149,10 @@ export default {
         // Add more cities for 山西省
       }
       // Add more conditions for other provinces
+
+      this.$nextTick(() => {
+        this.$refs.signupForm.resetFields();
+      });
     },
     submitForm() {
       //触发表单验证
@@ -125,7 +165,7 @@ export default {
                 message:response.message,
                 type:'success'
               });
-
+              this.$router.push('/dashboard');
             })
           } else {
             console.log('error submit!!');
@@ -136,8 +176,11 @@ export default {
     },
     onReset() {
       //this.$message('onReset');
+      this.selectedProvince=null;
+      this.selectedCity=null;
       this.$refs.signupForm.resetFields();
     },
+    
   }
 };
 

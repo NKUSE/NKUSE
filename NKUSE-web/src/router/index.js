@@ -180,7 +180,7 @@ export const constantRoutes = [
         path: 'teacher',
         name: '教师确认',
         component: () => import('@/views/teacher/index'),
-        meta: { title: '教师确认'}
+        meta: { title: '教师报名'}
       }
     ]
   },
