@@ -13,4 +13,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IExaminfoService extends IService<Examinfo> {
 
+    long getMaxId();
 }

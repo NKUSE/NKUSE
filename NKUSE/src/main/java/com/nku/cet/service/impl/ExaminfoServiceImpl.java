@@ -17,4 +17,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ExaminfoServiceImpl extends ServiceImpl<ExaminfoMapper, Examinfo> implements IExaminfoService {
 
+    @Override
+    public long getMaxId() {
+        return this.baseMapper.getMaximumExamId();
+    }
 }

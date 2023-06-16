@@ -29,7 +29,7 @@ public class UserinfoController {
             return Result.success(res);
         }
         else{
-            return Result.fail(20002, "失败");
+            return Result.fail(20002, "账号或密码错误");
         }
     }
     @GetMapping("/getInfo")
