@@ -50,5 +50,12 @@ export default {
       url: '/cet/examinfo/maxId',
       method: 'get'
     })
-  }
+  },
+  removeExamInfoPaper(exam) {
+    return request({
+      url: '/cet/examinfo/removeExamInfoPaper',
+      method: 'put',
+      data: exam
+    })
+  },
 }

@@ -215,7 +215,7 @@ export default {
       this.$refs.quesFormRef.clearValidate();
     },
     submitForm() {
-      if ((this.title == "新增题目")) {
+      if (this.title == "新增题目") {
         this.$refs.quesFormRef.validate((valid) => {
           if (valid) {
             quesApi.newQuestion(this.quesForm).then((response) => {
@@ -242,6 +242,7 @@ export default {
                 message: response.message,
                 type: "success",
               });
+
               this.quesForm = {};
               this.$refs.quesFormRef.clearValidate();
               this.getAllQuestions();
@@ -254,9 +255,10 @@ export default {
       }
     },
     deleteById(id) {
-      quesApi.deleteQuestion(id);
-      this.getAllQuestions();
-    }
+      quesApi.deleteQuestion(id).then((response) => {
+        this.getAllQuestions();
+      });
+    },
   },
   created() {
     this.getAllQuestions(this.searchModel);

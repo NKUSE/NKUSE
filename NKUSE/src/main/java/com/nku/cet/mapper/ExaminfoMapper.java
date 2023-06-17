@@ -4,6 +4,7 @@ import com.nku.cet.entity.Examinfo;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * <p>
@@ -17,5 +18,7 @@ import org.apache.ibatis.annotations.Select;
 public interface ExaminfoMapper extends BaseMapper<Examinfo> {
     @Select("SELECT MAX(exam_Id) FROM cet6_examinfo")
     long getMaximumExamId();
+
+    public void updateExamPaperIDToNull(String examId);
 }
 

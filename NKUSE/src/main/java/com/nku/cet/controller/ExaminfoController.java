@@ -99,4 +99,11 @@ public class ExaminfoController {
         res.put("maximumExamId", maxExamId);
         return Result.success(res);
     }
+
+    @PutMapping("/removeExamInfoPaper")
+    public Result<?> removeExamInfoPaper(@RequestBody Examinfo exam){
+        String examId = exam.getExamId();
+        examinfoService.getBaseMapper().updateExamPaperIDToNull(examId);
+        return Result.success("修改成功");
+    }
 }
