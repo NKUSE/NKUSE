@@ -1,5 +1,5 @@
 <template>
-  <div class="container" style="min-height: 100%; padding-bottom: 100px;">
+  <div class="container" style="min-height: 100%; padding-bottom: 100px">
     <el-container>
       <el-header>
         <div class="title-section">
@@ -11,96 +11,145 @@
           <div class="sidebar-section">
             <h2 class="sidebar-title">答题卡</h2>
             <div class="answer-sheet">
-                <div>客观题</div>
-            <el-container>
-                 <!-- 其他内容... -->
+              <div>客观题</div>
+              <el-container>
+                <!-- 其他内容... -->
 
                 <el-row :gutter="10">
-      <el-col v-for="(question, index) in questions" :key="index" :span="24 / 5">
-        <el-button round
-         @click="setCurrentQuestion(index)"
-        size="small" 
-        style="width: 40px; height: 40px" 
-        :class="{ 'selected': selectedOptions[index]!=null }">
-          {{ index + 1 }}
-        </el-button>
-        <div class="option"></div>
-      </el-col>
-    </el-row>
-            </el-container>
-            
-    <el-divider></el-divider>
-    
-                <div>主观题</div>
-             <el-container>
-                 <!-- 其他内容... -->
+                  <el-col
+                    v-for="(question, index) in questions"
+                    :key="index"
+                    :span="24 / 5"
+                  >
+                    <el-button
+                      round
+                      @click="setCurrentQuestion(index)"
+                      size="small"
+                      style="width: 40px; height: 40px"
+                      :class="{ selected: selectedOptions[index] != null }"
+                    >
+                      {{ index + 1 }}
+                    </el-button>
+                    <div class="option"></div>
+                  </el-col>
+                </el-row>
+              </el-container>
+
+              <el-divider></el-divider>
+
+              <div>主观题</div>
+              <el-container>
+                <!-- 其他内容... -->
 
                 <el-row :gutter="10">
-      <el-col v-for="(question, index) in questions_sub" :key="index" :span="24 / 5">
-        <el-button round
-         @click="setCurrentQuestionSub(index)"
-        size="small" 
-        style="width: 40px; height: 40px" 
-        :class="{ 'selected': questions_sub[index].answer != null }"
-        >
-          {{ index + 1 }}
-        </el-button>
-        <div class="option"></div>
-      </el-col>
-    </el-row>
-            </el-container>   
-    
-    <el-divider></el-divider>
-    <el-button round  size="big" style="width:240px;height:40px">保存答案</el-button>
-    <div style="margin-bottom: 20px;"></div>
-    <el-button type="primary" round @click="onSubmit" size="big" style="width:240px;height:40px"
-      >提交试卷</el-button
-    >
+                  <el-col
+                    v-for="(question, index) in questions_sub"
+                    :key="index"
+                    :span="24 / 5"
+                  >
+                    <el-button
+                      round
+                      @click="setCurrentQuestionSub(index)"
+                      size="small"
+                      style="width: 40px; height: 40px"
+                      :class="{ selected: questions_sub[index].answer != null }"
+                    >
+                      {{ index + 1 }}
+                    </el-button>
+                    <div class="option"></div>
+                  </el-col>
+                </el-row>
+              </el-container>
+
+              <el-divider></el-divider>
+              <el-button round size="big" style="width: 240px; height: 40px"
+                >保存答案</el-button
+              >
+              <div style="margin-bottom: 20px"></div>
+              <el-button
+                type="primary"
+                round
+                @click="onSubmit"
+                size="big"
+                style="width: 240px; height: 40px"
+                >提交试卷</el-button
+              >
             </div>
           </div>
         </el-aside>
         <el-main class="main-section">
-          <div class="question-section" v-if="currentQuestionType === 'objective'">
-      <!-- 客观题内容 -->
-      <div class="question-section" v-if="currentQuestion">
-            <div class="question">[单项选择题 {{ currentQuestion.seq_num }}/{{obj_questions_num}}] ({{ currentQuestion.score }}分)</div>
-<div>{{ currentQuestion.question }}</div>
-    <el-divider></el-divider>
-            <div class="options">
-              <div
-                v-for="(option, index) in currentQuestion.options"
-                :key="index"
-                class="option"
-              >
-                <label>
-                  <input type="radio"  v-model="selectedOptions[currentQuestionIndex]" :value="index" />
-                  {{ option }}
-                </label>
+          <div
+            class="question-section"
+            v-if="currentQuestionType === 'objective'"
+          >
+            <!-- 客观题内容 -->
+            <div class="question-section" v-if="currentQuestion">
+              <div class="question">
+                [单项选择题 {{ currentQuestion.seq_num }}/{{
+                  obj_questions_num
+                }}] ({{ currentQuestion.score }}分)
+              </div>
+              <div>{{ currentQuestion.question }}</div>
+              <el-divider></el-divider>
+              <div class="options">
+                <div
+                  v-for="(option, index) in currentQuestion.options"
+                  :key="index"
+                  class="option"
+                >
+                  <label>
+                    <input
+                      type="radio"
+                      v-model="selectedOptions[currentQuestionIndex]"
+                      :value="index"
+                    />
+                    {{ option }}
+                  </label>
+                </div>
               </div>
             </div>
+            <el-button-group>
+              <el-button-group class="bottom-buttons">
+                <el-button
+                  type="primary"
+                  @click="goToPreviousQuestion"
+                  icon="el-icon-arrow-left"
+                  >上一题</el-button
+                >
+                <el-button type="primary" @click="goToNextQuestion"
+                  >下一题 <i class="el-icon-arrow-right el-icon--right"></i
+                ></el-button>
+              </el-button-group>
+            </el-button-group>
           </div>
-          <el-button-group>
-      <el-button-group class="bottom-buttons">
-    <el-button type="primary" @click="goToPreviousQuestion" icon="el-icon-arrow-left">上一题</el-button>
-    <el-button type="primary" @click="goToNextQuestion">下一题 <i class="el-icon-arrow-right el-icon--right"></i></el-button>
-  </el-button-group>
-    </el-button-group>
-  </div>
-  <div class="question-section" v-else-if="currentQuestionType === 'subjective'">
-    <!-- 主观题内容 -->
-    <div class="question">[主观题 {{ currentSubQuestion.seq_num }}/{{sub_questions_num}}] ({{ currentSubQuestion.score }}分)</div>
-    <div>{{ currentSubQuestion.question }}</div>
-    <el-divider></el-divider>
-    <div>请在此输入答案：</div>
-     <el-input type="textarea" v-model="currentSubQuestion.answer"></el-input>
-     <div class="bottom-buttons">
-      <el-button plain @click="onResetClick(currentSubQuestion.seq_num - 1)" size="big">重置</el-button>
-    <el-button type="primary" plain @click="onSaveClick" size="big"
-      >保存答案</el-button
-    >
-  </div>  
-      </div>
-     
+          <div
+            class="question-section"
+            v-else-if="currentQuestionType === 'subjective'"
+          >
+            <!-- 主观题内容 -->
+            <div class="question">
+              [主观题 {{ currentSubQuestion.seq_num }}/{{ sub_questions_num }}]
+              ({{ currentSubQuestion.score }}分)
+            </div>
+            <div>{{ currentSubQuestion.question }}</div>
+            <el-divider></el-divider>
+            <div>请在此输入答案：</div>
+            <el-input
+              type="textarea"
+              v-model="currentSubQuestion.answer"
+            ></el-input>
+            <div class="bottom-buttons">
+              <el-button
+                plain
+                @click="onResetClick(currentSubQuestion.seq_num - 1)"
+                size="big"
+                >重置</el-button
+              >
+              <el-button type="primary" plain @click="onSaveClick" size="big"
+                >保存答案</el-button
+              >
+            </div>
+          </div>
         </el-main>
       </el-container>
     </el-container>
@@ -113,186 +162,250 @@ export default {
   components: {},
   data() {
     return {
-      currentQuestionType: 'objective',
+      currentQuestionType: "objective",
       currentQuestionIndex: 0,
       currentSubQuestionIndex: 0,
       selectedOption: null,
       selectedOptions: [], // 新增选中选项数组
       selected: [], // 新增选中选项数组
-      obj_questions_num: '20',
-      sub_questions_num: '2',
+      obj_questions_num: "20",
+      sub_questions_num: "2",
       questions: [
         {
-"seq_num": "1",
-"question": "Question 1: --- I can't find my keys. Have you seen them anywhere?\n--- Yes, I __________ them on the kitchen counter.",
-"options": ["A. saw", "B. have seen", "C. had seen", "D. see"],
-"answer": 1,
-"score": 5
-},
-{
-"seq_num": "2",
-"question": "Question 2: We've been waiting for the bus _______ half an hour, but it still hasn't arrived.",
-"options": ["A. since", "B. for", "C. in", "D. during"],
-"answer": 1,
-"score": 5
-},
-{
-"seq_num": "3",
-"question": "Question 3: Could you please tell me ________?",
-"options": ["A. where is the nearest bank", "B. where the nearest bank is", "C. the nearest bank where is", "D. where is nearest the bank"],
-"answer": 1,
-"score": 5
-},
-{
-"seq_num": "4",
-"question": "Question 4: --- How long _______ studying in the library?\n--- Since 9 a.m.",
-"options": ["A. have you been", "B. do you start", "C. did you start", "D. will you start"],
-"answer": 0,
-"score": 5
-},
-{
-"seq_num": "5",
-"question": "Question 5: I've never been to _______ university as beautiful as this one.",
-"options": ["A. a", "B. an", "C. the", "D. no article needed"],
-"answer": 2,
-"score": 5
-},
-{
-"seq_num": "6",
-"question": "Question 6: This is the first time I _______ such a delicious pizza.",
-"options": ["A. have tasted", "B. tasted", "C. had tasted", "D. will taste"],
-"answer": 0,
-"score": 5
-},
-{
-"seq_num": "7",
-"question": "Question 7: _______ you work hard, you won't pass the exam.",
-"options": ["A. If", "B. Unless", "C. Although", "D. Because"],
-"answer": 1,
-"score": 5
-},
-{
-"seq_num": "8",
-"question": "Question 8: My brother, along with his friends, _______ going to the concert tonight.",
-"options": ["A. is", "B. are", "C. were", "D. have been"],
-"answer": 1,
-"score": 5
-},
-{
-"seq_num": "9",
-"question": "Question 9: The book on the desk belongs to _______.",
-"options": ["A. he", "B. him", "C. his", "D. himself"],
-"answer": 2,
-"score": 5
-},
-{
-"seq_num": "10",
-"question": "Question 10: We _______ go to the supermarket. We can order groceries online now.",
-"options": ["A. don't have to", "B. mustn't", "C. needn't", "D. shouldn't"],
-"answer": 0,
-"score": 5
-},
-{
-"seq_num": "11",
-"question": "Question 11: _______ you finish your homework, you can play video games.",
-"options": ["A. After", "B. Until", "C. While", "D. Since"],
-"answer": 0,
-"score": 5
-},
-{
-"seq_num": "12",
-"question": "Question 12: Tom _______ the TV when the phone rang.",
-"options": ["A. was watching", "B. watched", "C. had watched", "D. is watching"],
-"answer": 0,
-"score": 5
-},
-{
-"seq_num": "13",
-"question": "Question 13: --- Could you lend me your pen?\n--- I'm sorry, but I _______ mine either.",
-"options": ["A. don't have", "B. didn't have", "C. haven't", "D. hadn't"],
-"answer": 2,
-"score": 5
-},
-{
-"seq_num": "14",
-"question": "Question 14: Not only _______ fluent English, but she also speaks French and German.",
-"options": ["A. she speaks", "B. does she speak", "C. she does speak", "D. she did speak"],
-"answer": 1,
-"score": 5
-},
-{
-"seq_num": "15",
-"question": "Question 15: --- Excuse me, is there _______ to park my car around here?\n--- Yes, there's a parking lot just down the street.",
-"options": ["A. anywhere", "B. somewhere", "C. nowhere", "D. everywhere"],
-"answer": 0,
-"score": 5
-},
-{
-"seq_num": "16",
-"question": "Question 16: _______ hard he tried, he couldn't solve the math problem.",
-"options": ["A. However", "B. Although", "C. Because", "D. Therefore"],
-"answer": 1,
-"score": 5
-},
-{
-"seq_num": "17",
-"question": "Question 17: You should apologize _______ her for your rude behavior.",
-"options": ["A. with", "B. to", "C. for", "D. about"],
-"answer": 1,
-"score": 5
-},
-{
-"seq_num": "18",
-"question": "Question 18: My sister _______ a cake for my birthday party tomorrow.",
-"options": ["A. will make", "B. makes", "C. is making", "D. has made"],
-"answer": 2,
-"score": 5
-},
-{
-"seq_num": "19",
-"question": "Question 19: By the time we got to the cinema, the movie _______.",
-"options": ["A. has already started", "B. had already started", "C. will already start", "D. already starts"],
-"answer": 1,
-"score": 5
-},
-{
-"seq_num": "20",
-"question": "Question 20: If you _______ more vegetables, you _______ healthier.",
-"options": ["A. eat", "B. will eat", "C. have eaten", "D. are eating"],
-"answer": 0,
-"score": 5
-}
+          seq_num: "1",
+          question:
+            "Question 1: --- I can't find my keys. Have you seen them anywhere?\n--- Yes, I __________ them on the kitchen counter.",
+          options: ["A. saw", "B. have seen", "C. had seen", "D. see"],
+          answer: 1,
+          score: 5,
+        },
+        {
+          seq_num: "2",
+          question:
+            "Question 2: We've been waiting for the bus _______ half an hour, but it still hasn't arrived.",
+          options: ["A. since", "B. for", "C. in", "D. during"],
+          answer: 1,
+          score: 5,
+        },
+        {
+          seq_num: "3",
+          question: "Question 3: Could you please tell me ________?",
+          options: [
+            "A. where is the nearest bank",
+            "B. where the nearest bank is",
+            "C. the nearest bank where is",
+            "D. where is nearest the bank",
+          ],
+          answer: 1,
+          score: 5,
+        },
+        {
+          seq_num: "4",
+          question:
+            "Question 4: --- How long _______ studying in the library?\n--- Since 9 a.m.",
+          options: [
+            "A. have you been",
+            "B. do you start",
+            "C. did you start",
+            "D. will you start",
+          ],
+          answer: 0,
+          score: 5,
+        },
+        {
+          seq_num: "5",
+          question:
+            "Question 5: I've never been to _______ university as beautiful as this one.",
+          options: ["A. a", "B. an", "C. the", "D. no article needed"],
+          answer: 2,
+          score: 5,
+        },
+        {
+          seq_num: "6",
+          question:
+            "Question 6: This is the first time I _______ such a delicious pizza.",
+          options: [
+            "A. have tasted",
+            "B. tasted",
+            "C. had tasted",
+            "D. will taste",
+          ],
+          answer: 0,
+          score: 5,
+        },
+        {
+          seq_num: "7",
+          question:
+            "Question 7: _______ you work hard, you won't pass the exam.",
+          options: ["A. If", "B. Unless", "C. Although", "D. Because"],
+          answer: 1,
+          score: 5,
+        },
+        {
+          seq_num: "8",
+          question:
+            "Question 8: My brother, along with his friends, _______ going to the concert tonight.",
+          options: ["A. is", "B. are", "C. were", "D. have been"],
+          answer: 1,
+          score: 5,
+        },
+        {
+          seq_num: "9",
+          question: "Question 9: The book on the desk belongs to _______.",
+          options: ["A. he", "B. him", "C. his", "D. himself"],
+          answer: 2,
+          score: 5,
+        },
+        {
+          seq_num: "10",
+          question:
+            "Question 10: We _______ go to the supermarket. We can order groceries online now.",
+          options: [
+            "A. don't have to",
+            "B. mustn't",
+            "C. needn't",
+            "D. shouldn't",
+          ],
+          answer: 0,
+          score: 5,
+        },
+        {
+          seq_num: "11",
+          question:
+            "Question 11: _______ you finish your homework, you can play video games.",
+          options: ["A. After", "B. Until", "C. While", "D. Since"],
+          answer: 0,
+          score: 5,
+        },
+        {
+          seq_num: "12",
+          question: "Question 12: Tom _______ the TV when the phone rang.",
+          options: [
+            "A. was watching",
+            "B. watched",
+            "C. had watched",
+            "D. is watching",
+          ],
+          answer: 0,
+          score: 5,
+        },
+        {
+          seq_num: "13",
+          question:
+            "Question 13: --- Could you lend me your pen?\n--- I'm sorry, but I _______ mine either.",
+          options: [
+            "A. don't have",
+            "B. didn't have",
+            "C. haven't",
+            "D. hadn't",
+          ],
+          answer: 2,
+          score: 5,
+        },
+        {
+          seq_num: "14",
+          question:
+            "Question 14: Not only _______ fluent English, but she also speaks French and German.",
+          options: [
+            "A. she speaks",
+            "B. does she speak",
+            "C. she does speak",
+            "D. she did speak",
+          ],
+          answer: 1,
+          score: 5,
+        },
+        {
+          seq_num: "15",
+          question:
+            "Question 15: --- Excuse me, is there _______ to park my car around here?\n--- Yes, there's a parking lot just down the street.",
+          options: [
+            "A. anywhere",
+            "B. somewhere",
+            "C. nowhere",
+            "D. everywhere",
+          ],
+          answer: 0,
+          score: 5,
+        },
+        {
+          seq_num: "16",
+          question:
+            "Question 16: _______ hard he tried, he couldn't solve the math problem.",
+          options: ["A. However", "B. Although", "C. Because", "D. Therefore"],
+          answer: 1,
+          score: 5,
+        },
+        {
+          seq_num: "17",
+          question:
+            "Question 17: You should apologize _______ her for your rude behavior.",
+          options: ["A. with", "B. to", "C. for", "D. about"],
+          answer: 1,
+          score: 5,
+        },
+        {
+          seq_num: "18",
+          question:
+            "Question 18: My sister _______ a cake for my birthday party tomorrow.",
+          options: ["A. will make", "B. makes", "C. is making", "D. has made"],
+          answer: 2,
+          score: 5,
+        },
+        {
+          seq_num: "19",
+          question:
+            "Question 19: By the time we got to the cinema, the movie _______.",
+          options: [
+            "A. has already started",
+            "B. had already started",
+            "C. will already start",
+            "D. already starts",
+          ],
+          answer: 1,
+          score: 5,
+        },
+        {
+          seq_num: "20",
+          question:
+            "Question 20: If you _______ more vegetables, you _______ healthier.",
+          options: ["A. eat", "B. will eat", "C. have eaten", "D. are eating"],
+          answer: 0,
+          score: 5,
+        },
         // Add more questions here...
       ],
       questions_sub: [
         {
-        "seq_num": "1",
-        "question": "请完成以下文本的翻译：洞庭湖位于湖南省东北部，面积很大，但湖水很浅。洞庭湖是长江的蓄洪池，湖的大小很大程度上取决于季节变化。湖北和湖南两省因其与湖的相对位置而得名：湖北意为“湖的北边”，而湖南则为“湖的南边”。洞庭湖作为龙舟赛的发源地，在中国文化中享有盛名。据说龙舟赛始于洞庭湖东岸，为的是搜寻楚国爱国诗人屈原的遗体。龙舟赛与洞庭湖及周边的美景，每年都吸引着成千上万来自全国和世界各地的游客。",
-        "options": ["A. saw", "B. have seen", "C. had seen", "D. see"],
-        "answer": null,
-        "score": 20
+          seq_num: "1",
+          question:
+            "请完成以下文本的翻译：洞庭湖位于湖南省东北部，面积很大，但湖水很浅。洞庭湖是长江的蓄洪池，湖的大小很大程度上取决于季节变化。湖北和湖南两省因其与湖的相对位置而得名：湖北意为“湖的北边”，而湖南则为“湖的南边”。洞庭湖作为龙舟赛的发源地，在中国文化中享有盛名。据说龙舟赛始于洞庭湖东岸，为的是搜寻楚国爱国诗人屈原的遗体。龙舟赛与洞庭湖及周边的美景，每年都吸引着成千上万来自全国和世界各地的游客。",
+          options: ["A. saw", "B. have seen", "C. had seen", "D. see"],
+          answer: null,
+          score: 20,
         },
         {
-        "seq_num": "2",
-        "question": "根据材料完成i写作：Directions ： For this part, you are allowed 30 minutes to write a short essay entitled It Pays to Be Honest. You should write at least 120 words following the outline given below ：　　当前社会上存在许多不诚实的现象　　诚实利人利己，做人应该诚实",
-        "options": ["A. saw", "B. have seen", "C. had seen", "D. see"],
-        "answer": null,
-        "score": 50
+          seq_num: "2",
+          question:
+            "根据材料完成i写作：Directions ： For this part, you are allowed 30 minutes to write a short essay entitled It Pays to Be Honest. You should write at least 120 words following the outline given below ：　　当前社会上存在许多不诚实的现象　　诚实利人利己，做人应该诚实",
+          options: ["A. saw", "B. have seen", "C. had seen", "D. see"],
+          answer: null,
+          score: 50,
         },
       ],
 
       currentQuestionIndex: 0,
-      selectedOption: null
+      selectedOption: null,
     };
   },
   watch: {},
   computed: {
     currentQuestion() {
-        return this.questions[this.currentQuestionIndex];
+      return this.questions[this.currentQuestionIndex];
     },
     currentSubQuestion() {
       return this.questions_sub[this.currentSubQuestionIndex];
-    }
+    },
   },
   beforeCreate() {},
   created() {},
@@ -302,12 +415,12 @@ export default {
   updated() {},
   destoryed() {},
   methods: {
-    onSubmit(){
+    onSubmit() {
       window.close();
-      this.$router.push('/stu_online_test/success')
+      this.$router.push("/stu_online_test/success");
     },
     onResetClick(index) {
-      this.questions_sub[index].answer = null
+      this.questions_sub[index].answer = null;
     },
     onSaveClick(index) {
       //this.questions_sub[index].answer = null
@@ -323,19 +436,19 @@ export default {
       }
     },
     setCurrentQuestion(index) {
-    this.currentQuestionIndex = index;
-    this.selectedOption = this.selectedOptions[index];
-    this.selected[index] = true;
-    this.currentQuestionType = 'objective';
-  },
+      this.currentQuestionIndex = index;
+      this.selectedOption = this.selectedOptions[index];
+      this.selected[index] = true;
+      this.currentQuestionType = "objective";
+    },
     setCurrentQuestionSub(index) {
-    this.currentSubQuestionIndex = index;
-    this.selectedOption = this.selectedOptions[index];
-    this.selected[index] = true;
-    this.currentQuestionType = 'subjective';
-  }
+      this.currentSubQuestionIndex = index;
+      this.selectedOption = this.selectedOptions[index];
+      this.selected[index] = true;
+      this.currentQuestionType = "subjective";
+    },
   },
-  fillter: {}
+  fillter: {},
 };
 </script>
 
@@ -388,20 +501,20 @@ export default {
   margin-right: 20px;
   border: 2px solid #333;
   border-radius: 4px;
-  position: relative
+  position: relative;
 }
 
 .main-title {
   color: #011b1d21;
 }
 .options {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+}
 
-  .option {
-    margin-bottom: 10px; /* 调整选项之间的下方间距 */
-  }
+.option {
+  margin-bottom: 10px; /* 调整选项之间的下方间距 */
+}
 .selected {
   /* 添加选中样式的样式属性 */
   background-color: rgba(210, 226, 244, 0.5);

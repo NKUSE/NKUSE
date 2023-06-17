@@ -118,6 +118,18 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/admin-paperinfo',
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'admin-paperinfo',
+        component: () => import('@/views/admin-paperinfo/index'),
+        meta: { title: '管理员-试卷管理', icon: 'form' }
+      }
+    ]
+  },
+  {
     path: '/example',
     component: Layout,
     children: [
