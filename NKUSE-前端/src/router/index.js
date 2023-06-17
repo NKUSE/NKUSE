@@ -130,18 +130,6 @@ export const constantRoutes = [
     ]
   },
   {
-    path: '/example',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'example',
-        component: () => import('@/views/example/index'),
-        meta: { title: '样例', icon: 'form'}
-      }
-    ]
-  },
-  {
     path: '/online_exam',
     component: Layout,
     children: [

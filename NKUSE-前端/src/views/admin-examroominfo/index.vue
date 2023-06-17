@@ -33,11 +33,11 @@
 
     <el-card>
       <el-table :data="roomList" stripe style="width: 100%">
-        <el-table-column prop="roomId" label="ID" width="200">
+        <el-table-column prop="roomId" label="ID" width="100">
         </el-table-column>
-        <el-table-column prop="place" label="考点名称" width="300">
+        <el-table-column prop="place" label="考点名称" width="200">
         </el-table-column>
-        <el-table-column prop="roomName" label="考场房间号" width="300">
+        <el-table-column prop="roomName" label="考场房间号" width="200">
         </el-table-column>
         <el-table-column prop="capacity" label="考场容量" width="200">
         </el-table-column>

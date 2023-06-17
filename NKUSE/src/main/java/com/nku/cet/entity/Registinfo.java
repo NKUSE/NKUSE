@@ -16,7 +16,7 @@ public class Registinfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String registId;
+    private Integer registId;
 
     private String examId;
 
@@ -32,11 +32,11 @@ public class Registinfo implements Serializable {
 
     private Float score;
 
-    public String getRegistId() {
+    public Integer getRegistId() {
         return registId;
     }
 
-    public void setRegistId(String registId) {
+    public void setRegistId(Integer registId) {
         this.registId = registId;
     }
     public String getExamId() {
