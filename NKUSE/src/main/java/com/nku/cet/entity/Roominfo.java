@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author lyh
@@ -16,21 +16,19 @@ public class Roominfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String roomId;
+    private Integer roomId;
 
     private String roomName;
 
     private String place;
 
-    private Integer capacityTotal;
+    private Integer capacity;
 
-    private Integer capacityNow;
-
-    public String getRoomId() {
+    public Integer getRoomId() {
         return roomId;
     }
 
-    public void setRoomId(String roomId) {
+    public void setRoomId(Integer roomId) {
         this.roomId = roomId;
     }
     public String getRoomName() {
@@ -47,29 +45,22 @@ public class Roominfo implements Serializable {
     public void setPlace(String place) {
         this.place = place;
     }
-    public Integer getCapacityTotal() {
-        return capacityTotal;
+    public Integer getCapacity() {
+        return capacity;
     }
 
-    public void setCapacityTotal(Integer capacityTotal) {
-        this.capacityTotal = capacityTotal;
-    }
-    public Integer getCapacityNow() {
-        return capacityNow;
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
     }
 
-    public void setCapacityNow(Integer capacityNow) {
-        this.capacityNow = capacityNow;
-    }
 
     @Override
     public String toString() {
         return "Roominfo{" +
-            "roomId=" + roomId +
-            ", roomName=" + roomName +
-            ", place=" + place +
-            ", capacityTotal=" + capacityTotal +
-            ", capacityNow=" + capacityNow +
-        "}";
+                "roomId=" + roomId +
+                ", roomName=" + roomName +
+                ", place=" + place +
+                ", capacity=" + capacity +
+                "}";
     }
 }
