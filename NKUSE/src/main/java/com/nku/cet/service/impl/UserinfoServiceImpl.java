@@ -53,6 +53,7 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
         if(obj != null) {
             Userinfo loginUser = JSON.parseObject(JSON.toJSONString(obj),Userinfo.class);
             Map<String,Object> data = new HashMap<>();
+            data.put("id", loginUser.getUserId());
             data.put("name", loginUser.getUserName());
             data.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
             //Integer role = this.baseMapper.getRoleNameByUserId(loginUser.getUserId());

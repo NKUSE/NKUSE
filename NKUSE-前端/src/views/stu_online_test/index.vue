@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import store from '@/store';
 import { mapGetters } from 'vuex'
 //import onlineExamApi from '@/api/online_exam'
   export default {
@@ -67,8 +68,7 @@ import { mapGetters } from 'vuex'
     watch: {},
     beforeCreate() {},
     created() {
-      //mapGetters
-      //this.getExams();
+      this.getExams();
     },
     beforeMount() {},
     mounted() {},
@@ -81,11 +81,13 @@ import { mapGetters } from 'vuex'
         this.$router.push('/stu_online_test/confirm')
       },
       getExams() {
-        onlineExamApi.getExams("000001").then(response => {
-          this.total = response.data.total
-          this.examList = response.data.exams
-        }
-        );
+        this.user_id = store.getters.userid;
+        console.log(this.user_id)
+        //onlineExamApi.getExams(this.user_id).then(response => {
+//this.total = response.data.total
+       //   this.examList = response.data.exams
+        //}
+       // );
       },
       checkDate(date) {
         const dateObj = new Date(date); // 将 date 变量转换为 Date 对象
