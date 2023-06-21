@@ -53,36 +53,117 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard', affix: true }
     }]
-  },
-  {
-    path: '/online_exam',
-    component: Layout,
-    children: [
-      {
-        path: 'online_exam',
-        name: 'Online_exam',
-        component: () => import('@/views/stu_online_test/index'),
-        meta: { title: '在线考试', icon: 'dashboard'}
-      }
-    ]
-  },
-  {
-    path: 'Github',
-    component: Layout,
-    children: [
-      {
-        path: 'https://github.com/orgs/NKUSE/repositories',
-        meta: { title: 'Github项目地址', icon: 'link' }
-      }
-    ]
   }
 ]
 export const asyncRoutes = [
   {
+    path: '/stu_sign_up',
+    meta: {
+      roles: ['stu']
+    },
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: '在线报名',
+        component: () => import('@/views/stu_sign_up/index'),
+        meta: { title: '在线报名', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/stu_search',
+    meta: {
+      roles: ['stu']
+    },
+    component: Layout,
+    children: [
+      {
+        path: '/stu_search/index',
+        name: 'search',
+        component: () => import('@/views/stu_search/index2'),
+        meta: { title: '报考信息查询', icon: 'form' }
+      },
+      {
+        path: '/stu_search/application_enquiry',
+        name: 'search',
+        hidden: true,
+        component: () => import('@/views/stu_search/index'),
+        meta: { title: '学生报考信息查询', icon: 'search' }
+      }
+    ]
+  },
+  {
+    path: '/stu_online_test',
+    meta: {
+      roles: ['stu']
+    },
+    component: Layout,
+    children: [
+      {
+        path: '/stu_online_test',
+        name: 'index',
+        component: () => import('@/views/stu_online_test/index'),
+        meta: { title: '在线考试', icon: '考试' }
+      },
+      {
+        path: '/stu_online_test/confirm',
+        name: 'Confirm',
+        hidden: true,
+        component: () => import('@/views/stu_online_test/confirm'),
+        meta: { title: '确认考试', icon: 'dashboard' }
+      },
+      {
+        path: '/stu_online_test/Testing',
+        name: 'Testing',
+        hidden: true,
+        component: () => import('@/views/stu_online_test/onlinetest'),
+        meta: { title: '答题页面', icon: 'dashboard' }
+      },
+      {
+        path: '/stu_online_test/success',
+        name: 'Success',
+        hidden: true,
+        component: () => import('@/views/stu_online_test/success'),
+        meta: { title: '提交成功', icon: 'dashboard' }
+      }
+    ]
+  },
+  {
+    path: '/stu_score_search',
+    meta: {
+      roles: ['stu']
+    },
+    component: Layout,
+    children: [
+      {
+        path: '/stu_score_search/index',
+        name: 'Score_search',
+        component: () => import('@/views/stu_score_search/index'),
+        meta: { title: '成绩查询', icon: 'marking' }
+      }
+    ]
+  }, 
+  {
+    path: '/teacher',
+    component: Layout,
+    meta: {
+      roles: ['tea']
+    },
+    children: [
+      {
+        path: 'marking',
+        name: 'marking',
+        component: () => import('@/views/tea_marking/index'),
+        meta: { title: '教师阅卷', icon: 'marking' }
+      }
+    ]
+  },
+  {
     path: '/admin-register',
     component: Layout,
     meta: {
-      roles: ['admin']
+      roles: ['adm']
     },
     children: [
       {
@@ -93,12 +174,11 @@ export const asyncRoutes = [
       }
     ]
   },
-
   {
     path: '/admin-userinfo',
-    component: Layout, 
+    component: Layout,
     meta: {
-      roles: ['admin']
+      roles: ['adm']
     },
     children: [
       {
@@ -109,12 +189,11 @@ export const asyncRoutes = [
       }
     ]
   },
-
   {
     path: '/admin-examroominfo',
-    component: Layout, 
+    component: Layout,
     meta: {
-      roles: ['admin']
+      roles: ['adm']
     },
     children: [
       {
@@ -127,9 +206,9 @@ export const asyncRoutes = [
   },
   {
     path: '/admin-examinfo',
-    component: Layout, 
+    component: Layout,
     meta: {
-      roles: ['admin']
+      roles: ['adm']
     },
     children: [
       {
@@ -140,27 +219,26 @@ export const asyncRoutes = [
       }
     ]
   },
-
   {
     path: '/admin-questioninfo',
-    component: Layout, 
+    component: Layout,
     meta: {
-      roles: ['admin']
+      roles: ['adm']
     },
     children: [
       {
         path: 'index',
         name: 'admin-questioninfo',
         component: () => import('@/views/admin-questioninfo/index'),
-        meta: { title: '管理员-考题信息管理', icon: 'form'}
+        meta: { title: '管理员-考题信息管理', icon: 'form' }
       }
     ]
   },
   {
     path: '/admin-paperinfo',
-    component: Layout, 
+    component: Layout,
     meta: {
-      roles: ['admin']
+      roles: ['adm']
     },
     children: [
       {
@@ -170,8 +248,36 @@ export const asyncRoutes = [
         meta: { title: '管理员-试卷管理', icon: 'form' }
       }
     ]
-  },  
-
+  },
+  {
+    path: '/all-userinfo',
+    component: Layout,
+    meta: {
+      roles: ['adm', 'tea', 'stu']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'all-userinfo',
+        component: () => import('@/views/all-userinfo/index'),
+        meta: { title: '个人信息管理', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: 'Github',
+    component: Layout,
+    meta: {
+      roles: ['adm', 'tea', 'stu']
+    },
+    children: [
+      {
+        path: 'https://github.com/orgs/NKUSE/repositories',
+        meta: { title: 'Github项目地址', icon: 'link' }
+      }
+    ]
+  }
+  ,
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

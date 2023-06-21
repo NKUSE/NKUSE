@@ -66,7 +66,7 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
                     roles.add("tea");
                     break;
                 case 3:
-                    roles.add("admin");
+                    roles.add("adm");
                     break;
             }
             data.put("roles", roles);
