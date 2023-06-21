@@ -32,21 +32,9 @@ router.beforeEach(async(to, from, next) => {
       } else {
         try {
           // get user info
-          // note: roles must be a object array! such as: ['admin'] or ,['developer','editor']
-          //获取roles
-          const { roles } = await store.dispatch('user/getInfo')//第一步
+          await store.dispatch('user/getInfo')
 
-          // generate accessible routes map based on roles
-          //获取通过权限验证的路由
-          const accessRoutes = await store.dispatch('permission/generateRoutes', roles)//第二步
-          //更新加载路由
-          router.options.routes = store.getters.permission_routes//第三步
-          // dynamically add accessible routes
-          router.addRoutes(accessRoutes)
-          console.log(store)
-          // hack method to ensure that addRoutes is complete
-          // set the replace: true, so the navigation will not leave a history record
-          next({ ...to, replace: true })
+          next()
         } catch (error) {
           // remove token and go to login page to re-login
           await store.dispatch('user/resetToken')

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -54,8 +55,21 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
             Map<String,Object> data = new HashMap<>();
             data.put("name", loginUser.getUserName());
             data.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-            String role = this.baseMapper.getRoleNameByUserId(loginUser.getUserId());
-            data.put("roles", role);
+            //Integer role = this.baseMapper.getRoleNameByUserId(loginUser.getUserId());
+            LinkedList<String> roles = new LinkedList<>();
+            switch (loginUser.getUserRole()) {
+                default:
+                case 1:
+                    roles.add("stu");
+                    break;
+                case 2:
+                    roles.add("tea");
+                    break;
+                case 3:
+                    roles.add("admin");
+                    break;
+            }
+            data.put("roles", roles);
             return data;
         }
         return null;

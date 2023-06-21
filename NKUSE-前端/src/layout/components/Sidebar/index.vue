@@ -23,7 +23,7 @@ import { mapGetters } from 'vuex'
 import Logo from './Logo'
 import SidebarItem from './SidebarItem'
 import variables from '@/styles/variables.scss'
-
+import store from './../../../store'
 export default {
   components: { SidebarItem, Logo },
   computed: {
@@ -31,6 +31,7 @@ export default {
       'sidebar'
     ]),
     routes() {
+      this.$router.options.routes = store.getters.permission_routes
       return this.$router.options.routes
     },
     activeMenu() {

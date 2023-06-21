@@ -55,81 +55,6 @@ export const constantRoutes = [
     }]
   },
   {
-    path: '/admin-register',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'admin-register',
-        component: () => import('@/views/admin-register/index'),
-        meta: { title: '管理员-报名信息管理', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/admin-userinfo',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'admin-userinfo',
-        component: () => import('@/views/admin-userinfo/index'),
-        meta: { title: '管理员-用户信息管理', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/admin-examroominfo',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'admin-examroominfo',
-        component: () => import('@/views/admin-examroominfo/index'),
-        meta: { title: '管理员-考场信息管理', icon: 'form' }
-      }
-    ]
-  },
-  {
-    path: '/admin-examinfo',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'admin-examinfoo',
-        component: () => import('@/views/admin-examinfo/index'),
-        meta: { title: '管理员-考试信息管理', icon: 'form' }
-      }
-    ]
-  },
-
-  {
-    path: '/admin-questioninfo',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'admin-questioninfo',
-        component: () => import('@/views/admin-questioninfo/index'),
-        meta: { title: '管理员-考题信息管理', icon: 'form'}
-      }
-    ]
-  },
-  {
-    path: '/admin-paperinfo',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'admin-paperinfo',
-        component: () => import('@/views/admin-paperinfo/index'),
-        meta: { title: '管理员-试卷管理', icon: 'form' }
-      }
-    ]
-  },
-  {
     path: '/online_exam',
     component: Layout,
     children: [
@@ -150,12 +75,106 @@ export const constantRoutes = [
         meta: { title: 'Github项目地址', icon: 'link' }
       }
     ]
+  }
+]
+export const asyncRoutes = [
+  {
+    path: '/admin-register',
+    component: Layout,
+    meta: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'admin-register',
+        component: () => import('@/views/admin-register/index'),
+        meta: { title: '管理员-报名信息管理', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/admin-userinfo',
+    component: Layout, 
+    meta: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'admin-userinfo',
+        component: () => import('@/views/admin-userinfo/index'),
+        meta: { title: '管理员-用户信息管理', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/admin-examroominfo',
+    component: Layout, 
+    meta: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'admin-examroominfo',
+        component: () => import('@/views/admin-examroominfo/index'),
+        meta: { title: '管理员-考场信息管理', icon: 'form' }
+      }
+    ]
+  },
+  {
+    path: '/admin-examinfo',
+    component: Layout, 
+    meta: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'admin-examinfoo',
+        component: () => import('@/views/admin-examinfo/index'),
+        meta: { title: '管理员-考试信息管理', icon: 'form' }
+      }
+    ]
+  },
+
+  {
+    path: '/admin-questioninfo',
+    component: Layout, 
+    meta: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'admin-questioninfo',
+        component: () => import('@/views/admin-questioninfo/index'),
+        meta: { title: '管理员-考题信息管理', icon: 'form'}
+      }
+    ]
+  },
+  {
+    path: '/admin-paperinfo',
+    component: Layout, 
+    meta: {
+      roles: ['admin']
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'admin-paperinfo',
+        component: () => import('@/views/admin-paperinfo/index'),
+        meta: { title: '管理员-试卷管理', icon: 'form' }
+      }
+    ]
   },  
-  
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
-
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
