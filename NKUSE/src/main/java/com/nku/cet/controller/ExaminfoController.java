@@ -106,4 +106,13 @@ public class ExaminfoController {
         examinfoService.getBaseMapper().updateExamPaperIDToNull(examId);
         return Result.success("修改成功");
     }
+
+    @GetMapping("/getByUserId")
+    public Result<Map<String, Object>> getByUserId(@RequestParam("user_id")String user_id) {
+        Map<String, Object> data = examinfoService.getUserExams(user_id);
+        if(data != null) {
+            return Result.success("查询成功",data);
+        }
+        return Result.fail(20002, "无考试信息");
+    }
 }

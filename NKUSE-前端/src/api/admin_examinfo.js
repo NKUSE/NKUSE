@@ -58,4 +58,13 @@ export default {
       data: exam
     })
   },
+  getExaminfoByUserId(userid) {
+    return request({
+      url: '/cet/examinfo/getByUserId',
+      method: 'get',
+      params: {
+        examId: id
+      }
+    })
+  },
 }

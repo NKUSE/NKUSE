@@ -87,6 +87,7 @@
     data() {
       return {
         checkList: ["选中且禁用", "我已认真阅读考试注意事项，可以开始考试"],
+        userinfo: {}
       }
     },
     watch: {},
@@ -103,6 +104,9 @@
       onButtonClick() {
         this.$router.push('/stu_online_test/Testing')
       },
+    },
+    getUserInfo(){
+      
     },
     fillter: {},
   }

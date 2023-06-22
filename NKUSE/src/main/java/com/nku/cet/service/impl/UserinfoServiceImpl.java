@@ -80,4 +80,17 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
     public void logout(String token) {
         redisTemplate.delete(token);
     }
+
+    @Override
+    public Map<String, Object> getUserAllInfo(String userid) {
+        LambdaQueryWrapper<Userinfo> wrapper = new LambdaQueryWrapper();
+        wrapper.eq(Userinfo::getUserId,userid);
+        Userinfo User = this.getOne(wrapper);
+        Map<String, Object> map = new HashMap<>();
+        map.put("name", User.getUserName());
+        map.put("idnumber",User.getUserIdnumber());
+        map.put("email",User.getUserEmail());
+        map.put("phonenumber",User.getUserPhonenumber());
+        return map;
+    }
 }

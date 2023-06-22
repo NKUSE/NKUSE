@@ -47,4 +47,9 @@ public class UserinfoController {
         userinfoService.logout(token);
         return Result.success();
     }
+    @GetMapping("/getInfoById")
+    public Result<Map<String, Object>> getInfoById(@RequestParam("userid") String userid) {
+        Map<String, Object> res = userinfoService.getUserAllInfo(userid);
+        return Result.success(res);
+    }
 }

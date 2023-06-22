@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 /**
  * <p>
  *  Mapper 接口
@@ -20,5 +22,7 @@ public interface ExaminfoMapper extends BaseMapper<Examinfo> {
     long getMaximumExamId();
 
     public void updateExamPaperIDToNull(String examId);
+
+    public List<Examinfo> getByUserId(String examId);
 }
 

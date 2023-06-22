@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nku.cet.mapper.ExaminfoMapper">
+    <resultMap id="examInfoResultMap" type="com.nku.cet.entity.Examinfo">
+        <!-- 指定实体类中对应的字段和数据库中的列名映射 -->
+        <id property="examId" column="exam_id"/>
+        <result property="examName" column="exam_name"/>
+        <result property="examPaperid" column="exam_paperID"/>
+        <result property="examTime" column="exam_time"/>
+        <result property="examState" column="exam_state"/>
+        <result property="examFee" column="exam_fee"/>
+        <!-- 添加其他字段映射 -->
+        <!-- ... -->
+    </resultMap>
     <update id="updateExamPaperIDToNull" parameterType="String">
         UPDATE cet6_examinfo
         SET exam_paperID = NULL
         WHERE exam_id = #{examId}
     </update>
+    <select id="getByUserId" parameterType="String" resultType="com.nku.cet.entity.Examinfo">
+        SELECT *
+        FROM cet6_examinfo
+        WHERE exam_id IN (SELECT exam_id FROM cet6_registinfo WHERE user_id = #{userId});
+    </select>
 </mapper>

@@ -20,4 +20,6 @@ public interface IUserinfoService extends IService<Userinfo> {
     Map<String, Object> getUserInfo(String token);
 
     void logout(String token);
+
+    Map<String, Object> getUserAllInfo(String userid);
 }
