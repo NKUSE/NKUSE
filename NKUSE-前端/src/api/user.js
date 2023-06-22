@@ -22,12 +22,3 @@ export function logout() {
     method: 'post'
   })
 }
-export function getInfoById(id) {
-  return request({
-    url: '/cet/userinfo/getInfoById',
-    method: 'get',
-    params: {
-      user_id: userid
-    }
-  })
-}

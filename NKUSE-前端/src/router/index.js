@@ -111,7 +111,7 @@ export const asyncRoutes = [
         name: 'Confirm',
         hidden: true,
         component: () => import('@/views/stu_online_test/confirm'),
-        meta: { title: '确认考试', icon: 'dashboard' }
+        meta: { title: '确认考试', icon: 'dashboard', meta: { requiresExamid: true }  }
       },
       {
         path: '/stu_online_test/Testing',

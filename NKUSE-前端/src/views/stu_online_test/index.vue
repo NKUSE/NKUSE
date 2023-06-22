@@ -37,7 +37,7 @@
           <el-button
             type="primary"
             v-bind:disabled="checkDate(item.time)"
-            @click="onButtonClick"
+            @click="onButtonClick(item.examId)"
             size="small"
             style="float: right"
             >开始考试</el-button
@@ -52,7 +52,7 @@
 <script>
 import store from "@/store";
 import { mapGetters } from "vuex";
-import onlineExamApi from "@/api/stu_online_exam";
+import onlineExamApi from "@/api/stu_online_exam.js";
 export default {
   data() {
     return {
@@ -82,12 +82,13 @@ export default {
   destoryed() {},
   methods: {
     request() {},
-    onButtonClick() {
+    onButtonClick(examid) {
+      this.$store.dispatch('app/updateExamid', examid);
+      console.log(store.getters.selected_onlineexam_id);
       this.$router.push("/stu_online_test/confirm");
     },
     getExams() {
       this.user_id = store.getters.userid;
-      console.log(this.user_id);
       onlineExamApi.getExams(this.user_id).then((response) => {
         this.total = response.data.total;
         this.examList = response.data.exams;

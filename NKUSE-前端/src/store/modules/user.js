@@ -8,7 +8,8 @@ const getDefaultState = () => {
     name: '',
     avatar: '',
     roles: [],
-    id: 0
+    id: 0,
+    selected_onlineexam_id: 0
   }
 }
 
@@ -32,6 +33,9 @@ const mutations = {
   },
   SET_ID: (state, id) => {
     state.id = id
+  },
+  SET_SELECTED_EXAMID: (state, selected_onlineexam_id) => {
+    state.selected_onlineexam_id = selected_onlineexam_id
   },
 }
 
@@ -82,6 +86,7 @@ const actions = {
         commit('RESET_STATE')
         commit('SET_ROLES', [])
         commit('SET_ID', 0)
+        commit('SET_SELECTED_EXAMID', 0)
         resolve()
       }).catch(error => {
         reject(error)
@@ -96,6 +101,7 @@ const actions = {
       commit('RESET_STATE')
       commit('SET_ROLES', [])
       commit('SET_ID', 0)
+      commit('SET_SELECTED_EXAMID', 0)
       resolve()
     })
   }
