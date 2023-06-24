@@ -3,7 +3,7 @@
     <el-container>
       <el-header>
         <div class="title-section">
-          <h1 class="title">第1届英语六级考试-在线测试</h1>
+          <h1 class="title">第{{this.selected_onlineexam_id}}届英语六级考试-在线测试</h1>
         </div>
       </el-header>
       <el-container>
@@ -157,11 +157,15 @@
 </template>
 
 <script>
+import onlineExamApi from "@/api/stu_online_exam";
+import { get } from 'js-cookie';
 export default {
   props: [],
   components: {},
   data() {
     return {
+      selected_onlineexam_id: 1,
+      paperid: 1,
       currentQuestionType: "objective",
       currentQuestionIndex: 0,
       currentSubQuestionIndex: 0,
@@ -379,21 +383,16 @@ export default {
         {
           seq_num: "1",
           question:
-            "请完成以下文本的翻译：洞庭湖位于湖南省东北部，面积很大，但湖水很浅。洞庭湖是长江的蓄洪池，湖的大小很大程度上取决于季节变化。湖北和湖南两省因其与湖的相对位置而得名：湖北意为“湖的北边”，而湖南则为“湖的南边”。洞庭湖作为龙舟赛的发源地，在中国文化中享有盛名。据说龙舟赛始于洞庭湖东岸，为的是搜寻楚国爱国诗人屈原的遗体。龙舟赛与洞庭湖及周边的美景，每年都吸引着成千上万来自全国和世界各地的游客。",
-          options: ["A. saw", "B. have seen", "C. had seen", "D. see"],
-          answer: null,
+            "",
           score: 20,
         },
         {
           seq_num: "2",
           question:
-            "根据材料完成i写作：Directions ： For this part, you are allowed 30 minutes to write a short essay entitled It Pays to Be Honest. You should write at least 120 words following the outline given below ：　　当前社会上存在许多不诚实的现象　　诚实利人利己，做人应该诚实",
-          options: ["A. saw", "B. have seen", "C. had seen", "D. see"],
-          answer: null,
+            "",
           score: 50,
         },
       ],
-
       currentQuestionIndex: 0,
       selectedOption: null,
     };
@@ -408,13 +407,23 @@ export default {
     },
   },
   beforeCreate() {},
-  created() {},
+  created() {
+    this.init();
+  },
   beforeMount() {},
   mounted() {},
   beforeUpdate() {},
   updated() {},
   destoryed() {},
   methods: {
+    init() {
+      this.selected_onlineexam_id = this.$store.state.app.Examid;
+      onlineExamApi.getPaperId(this.selected_onlineexam_id).then((response) => {this.paperid = response.data.paperid});
+      onlineExamApi.getPaperInfo(this.paperid).then((response) => {
+        this.questions = response.data.questions;
+        this.questions_sub = response.data.questionsSub;
+      });
+    },
     onSubmit() {
       window.close();
       this.$router.push("/stu_online_test/success");

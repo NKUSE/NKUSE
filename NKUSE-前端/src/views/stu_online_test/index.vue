@@ -22,7 +22,7 @@
           <span>第{{ item.examId }}届全国大学英语六级考试</span>
         </div>
         <div class="text item">{{ "考试名称 : " + item.examName }}</div>
-        <div class="text item">{{ "考试时间 : " + item.examTime }}</div>
+        <div class="text item">{{ "考试时间 : " + item.examDate }}</div>
         <div class="text item">{{ "考试地点 : 线上考场" }}</div>
         <div class="text item" v-if="item.examState === 1">
             {{"考试状态 : "}}<el-tag>未开始</el-tag>
@@ -84,7 +84,6 @@ export default {
     request() {},
     onButtonClick(examid) {
       this.$store.dispatch('app/updateExamid', examid);
-      console.log(store.getters.selected_onlineexam_id);
       this.$router.push("/stu_online_test/confirm");
     },
     getExams() {
@@ -113,7 +112,26 @@ export default {
             dateArray[3],
             dateArray[4]
           );
-          item.examTime = examDate;
+          var year = examDate.getFullYear();
+          var month = ("0" + (examDate.getMonth() + 1)).slice(-2);
+          var day = ("0" + examDate.getDate()).slice(-2);
+          var hour = ("0" + examDate.getHours()).slice(-2);
+          var minute = ("0" + examDate.getMinutes()).slice(-2);
+          var second = ("0" + examDate.getSeconds()).slice(-2);
+
+          var formattedDate =
+            year +
+            "-" +
+            month +
+            "-" +
+            day +
+            " " +
+            hour +
+            ":" +
+            minute +
+            ":" +
+            second;
+          item.examDate = formattedDate;
         });
       });
     },

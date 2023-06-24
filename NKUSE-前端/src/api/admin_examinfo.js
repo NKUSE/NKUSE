@@ -60,7 +60,7 @@ export default {
   },
   getExaminfoByExamId(examid) {
     return request({
-      url: '/cet/examinfo/getByUserId',
+      url: '/cet/examinfo/getByExamId',
       method: 'get',
       params: {
         examId: examid

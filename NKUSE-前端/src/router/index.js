@@ -118,7 +118,7 @@ export const asyncRoutes = [
         name: 'Testing',
         hidden: true,
         component: () => import('@/views/stu_online_test/onlinetest'),
-        meta: { title: '答题页面', icon: 'dashboard' }
+        meta: { title: '答题页面', icon: 'dashboard', meta: { requiresExamid: true }   }
       },
       {
         path: '/stu_online_test/success',

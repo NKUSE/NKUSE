@@ -45,13 +45,15 @@
     >
       >
       <el-descriptions-item label="考试名称"
-        >第1届全国大学英语六级考试</el-descriptions-item
+        >第{{
+          this.selected_onlineexam_id
+        }}届全国大学英语六级考试</el-descriptions-item
       >
-      <el-descriptions-item label="考试时间"
-        >2023-05-22 20:03:26</el-descriptions-item
-      >
+      <el-descriptions-item label="考试时间">{{
+        this.examinfo.dateprint
+      }}</el-descriptions-item>
       <el-descriptions-item label="考试地点" :span="2"
-        >津南校区</el-descriptions-item
+        >线上考场</el-descriptions-item
       >
     </el-descriptions>
     <el-divider></el-divider>
@@ -73,7 +75,7 @@
     <el-divider></el-divider>
     <el-button
       type="primary"
-      @click="onButtonClick"
+      @click="onButtonClick(selected_onlineexam_id)"
       size="big"
       style="float: right"
       :disabled="!checkList.includes('我已认真阅读考试注意事项，可以开始考试')"
@@ -99,9 +101,11 @@ export default {
         name: "",
         idnumber: "",
         email: "",
-        phonenumber: ""
+        phonenumber: "",
       },
+      examinfo: {
 
+      },
       selected_onlineexam_id: 0,
     };
   },
@@ -110,7 +114,6 @@ export default {
   beforeCreate() {},
   created() {
     this.getUserInfo();
-    this.$forceUpdate();
     this.getExamInfo();
   },
   beforeMount() {},
@@ -120,10 +123,13 @@ export default {
   destoryed() {},
   methods: {
     request() {},
-    onButtonClick() {
+    onButtonClick(examid) {
+      console.log(examid);
+      console.log(this.selected_onlineexam_id);
+      this.$store.dispatch('app/updateExamid', this.selected_onlineexam_id);
       this.$router.push("/stu_online_test/Testing");
     },
-    getUserInfo() { 
+    getUserInfo() {
       this.user_id = store.getters.userid;
       onlineExamApi.getInfoById(this.user_id).then((response) => {
         this.userinfo.name = response.data.name;
@@ -135,9 +141,42 @@ export default {
     },
     getExamInfo() {
       this.selected_onlineexam_id = this.$store.state.app.Examid;
-      //ExaminfoApi.getOne(this.selected_onlineexam_id).then((response) => {
-      //  this.examinfo = response.dats.rows[0];
-      //});
+      console.log("exam_id : " + this.$store.state.app.Examid);
+      console.log("exam_id : " + this.selected_onlineexam_id);
+      ExaminfoApi.getOneExamInfo(this.selected_onlineexam_id).then(
+        (response) => {
+          this.examinfo = response.data.rows[0];
+          console.log("this.examinfo:");
+          console.log(this.examinfo);
+          this.examinfo.date2 = new Date(
+            this.examinfo.examTime[0],
+            this.examinfo.examTime[1] - 1,
+            this.examinfo.examTime[2],
+            this.examinfo.examTime[3],
+            this.examinfo.examTime[4]
+          );
+          var year = this.examinfo.date2.getFullYear();
+          var month = ("0" + (this.examinfo.date2.getMonth() + 1)).slice(-2);
+          var day = ("0" + this.examinfo.date2.getDate()).slice(-2);
+          var hour = ("0" + this.examinfo.date2.getHours()).slice(-2);
+          var minute = ("0" + this.examinfo.date2.getMinutes()).slice(-2);
+          var second = ("0" + this.examinfo.date2.getSeconds()).slice(-2);
+
+          var formattedDate =
+            year +
+            "-" +
+            month +
+            "-" +
+            day +
+            " " +
+            hour +
+            ":" +
+            minute +
+            ":" +
+            second;
+          this.examinfo.dateprint = formattedDate;
+        }
+      );
     },
   },
 

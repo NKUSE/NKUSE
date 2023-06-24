@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
+import java.net.Inet4Address;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -114,5 +115,19 @@ public class ExaminfoController {
             return Result.success("查询成功",data);
         }
         return Result.fail(20002, "无考试信息");
+    }
+
+    @GetMapping("/getPaperById")
+    public Result<Map<String, Object>> getPaperById(@RequestParam("exam_id")Integer exam_id) {
+        LambdaQueryWrapper<Examinfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Examinfo::getExamId, exam_id);
+        Examinfo record = examinfoService.getOne(wrapper);
+        if(record == null) {
+            return Result.fail(20001, "系统错误，管理员未设置试卷");
+        }
+        Integer paperid = record.getExamPaperid();
+        Map<String,Object> res = new HashMap<>();
+        res.put("paperid", paperid);
+        return Result.success("获取试卷id成功", res);
     }
 }
