@@ -77,5 +77,31 @@ export default {
                 sheetid: sheetid
             }
         })
+    },
+
+    getSheet(sheetid) {
+        return request({
+            url: '/cet/answersheet/getSheet',
+            method: 'get',
+            params: {
+                sheetid: sheetid
+            }
+        })
+    },
+
+    updateSheet(sheet) {
+        return request({
+            url: '/cet/answersheet/updateSheet',
+            method: 'put',
+            data: sheet
+        })
+    },
+
+    submitSheet(sheet) {
+        return request({
+            url: '/cet/answersheet/submitSheet',
+            method: 'put',
+            data: sheet
+        })
     }
 }

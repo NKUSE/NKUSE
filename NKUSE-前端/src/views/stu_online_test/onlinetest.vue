@@ -3,7 +3,9 @@
     <el-container>
       <el-header>
         <div class="title-section">
-          <h1 class="title">第{{this.selected_onlineexam_id}}届英语六级考试-在线测试</h1>
+          <h1 class="title">
+            第{{ this.selected_onlineexam_id }}届英语六级考试-在线测试
+          </h1>
         </div>
       </el-header>
       <el-container>
@@ -62,7 +64,11 @@
               </el-container>
 
               <el-divider></el-divider>
-              <el-button round size="big" style="width: 240px; height: 40px"
+              <el-button
+                round
+                size="big"
+                style="width: 240px; height: 40px"
+                @click="onSave"
                 >保存答案</el-button
               >
               <div style="margin-bottom: 20px"></div>
@@ -136,8 +142,10 @@
             <div>请在此输入答案：</div>
             <el-input
               type="textarea"
-              v-model="currentSubQuestion.answer"
-            ></el-input>
+              v-model="questions_sub[currentSubQuestionIndex].answer"
+              @input="inputChange"
+            ></el-input
+            ><!--" -->
             <div class="bottom-buttons">
               <el-button
                 plain
@@ -157,15 +165,18 @@
 </template>
 
 <script>
+import store from "@/store";
 import onlineExamApi from "@/api/stu_online_exam";
-import { get } from 'js-cookie';
+import { get } from "js-cookie";
 export default {
   props: [],
   components: {},
   data() {
     return {
+      user_id: 0,
       selected_onlineexam_id: 1,
       paperid: 1,
+      sheetid: 0,
       currentQuestionType: "objective",
       currentQuestionIndex: 0,
       currentSubQuestionIndex: 0,
@@ -174,227 +185,10 @@ export default {
       selected: [], // 新增选中选项数组
       obj_questions_num: "20",
       sub_questions_num: "2",
-      questions: [
-        {
-          seq_num: "1",
-          question:
-            "Question 1: --- I can't find my keys. Have you seen them anywhere?\n--- Yes, I __________ them on the kitchen counter.",
-          options: ["A. saw", "B. have seen", "C. had seen", "D. see"],
-          answer: 1,
-          score: 5,
-        },
-        {
-          seq_num: "2",
-          question:
-            "Question 2: We've been waiting for the bus _______ half an hour, but it still hasn't arrived.",
-          options: ["A. since", "B. for", "C. in", "D. during"],
-          answer: 1,
-          score: 5,
-        },
-        {
-          seq_num: "3",
-          question: "Question 3: Could you please tell me ________?",
-          options: [
-            "A. where is the nearest bank",
-            "B. where the nearest bank is",
-            "C. the nearest bank where is",
-            "D. where is nearest the bank",
-          ],
-          answer: 1,
-          score: 5,
-        },
-        {
-          seq_num: "4",
-          question:
-            "Question 4: --- How long _______ studying in the library?\n--- Since 9 a.m.",
-          options: [
-            "A. have you been",
-            "B. do you start",
-            "C. did you start",
-            "D. will you start",
-          ],
-          answer: 0,
-          score: 5,
-        },
-        {
-          seq_num: "5",
-          question:
-            "Question 5: I've never been to _______ university as beautiful as this one.",
-          options: ["A. a", "B. an", "C. the", "D. no article needed"],
-          answer: 2,
-          score: 5,
-        },
-        {
-          seq_num: "6",
-          question:
-            "Question 6: This is the first time I _______ such a delicious pizza.",
-          options: [
-            "A. have tasted",
-            "B. tasted",
-            "C. had tasted",
-            "D. will taste",
-          ],
-          answer: 0,
-          score: 5,
-        },
-        {
-          seq_num: "7",
-          question:
-            "Question 7: _______ you work hard, you won't pass the exam.",
-          options: ["A. If", "B. Unless", "C. Although", "D. Because"],
-          answer: 1,
-          score: 5,
-        },
-        {
-          seq_num: "8",
-          question:
-            "Question 8: My brother, along with his friends, _______ going to the concert tonight.",
-          options: ["A. is", "B. are", "C. were", "D. have been"],
-          answer: 1,
-          score: 5,
-        },
-        {
-          seq_num: "9",
-          question: "Question 9: The book on the desk belongs to _______.",
-          options: ["A. he", "B. him", "C. his", "D. himself"],
-          answer: 2,
-          score: 5,
-        },
-        {
-          seq_num: "10",
-          question:
-            "Question 10: We _______ go to the supermarket. We can order groceries online now.",
-          options: [
-            "A. don't have to",
-            "B. mustn't",
-            "C. needn't",
-            "D. shouldn't",
-          ],
-          answer: 0,
-          score: 5,
-        },
-        {
-          seq_num: "11",
-          question:
-            "Question 11: _______ you finish your homework, you can play video games.",
-          options: ["A. After", "B. Until", "C. While", "D. Since"],
-          answer: 0,
-          score: 5,
-        },
-        {
-          seq_num: "12",
-          question: "Question 12: Tom _______ the TV when the phone rang.",
-          options: [
-            "A. was watching",
-            "B. watched",
-            "C. had watched",
-            "D. is watching",
-          ],
-          answer: 0,
-          score: 5,
-        },
-        {
-          seq_num: "13",
-          question:
-            "Question 13: --- Could you lend me your pen?\n--- I'm sorry, but I _______ mine either.",
-          options: [
-            "A. don't have",
-            "B. didn't have",
-            "C. haven't",
-            "D. hadn't",
-          ],
-          answer: 2,
-          score: 5,
-        },
-        {
-          seq_num: "14",
-          question:
-            "Question 14: Not only _______ fluent English, but she also speaks French and German.",
-          options: [
-            "A. she speaks",
-            "B. does she speak",
-            "C. she does speak",
-            "D. she did speak",
-          ],
-          answer: 1,
-          score: 5,
-        },
-        {
-          seq_num: "15",
-          question:
-            "Question 15: --- Excuse me, is there _______ to park my car around here?\n--- Yes, there's a parking lot just down the street.",
-          options: [
-            "A. anywhere",
-            "B. somewhere",
-            "C. nowhere",
-            "D. everywhere",
-          ],
-          answer: 0,
-          score: 5,
-        },
-        {
-          seq_num: "16",
-          question:
-            "Question 16: _______ hard he tried, he couldn't solve the math problem.",
-          options: ["A. However", "B. Although", "C. Because", "D. Therefore"],
-          answer: 1,
-          score: 5,
-        },
-        {
-          seq_num: "17",
-          question:
-            "Question 17: You should apologize _______ her for your rude behavior.",
-          options: ["A. with", "B. to", "C. for", "D. about"],
-          answer: 1,
-          score: 5,
-        },
-        {
-          seq_num: "18",
-          question:
-            "Question 18: My sister _______ a cake for my birthday party tomorrow.",
-          options: ["A. will make", "B. makes", "C. is making", "D. has made"],
-          answer: 2,
-          score: 5,
-        },
-        {
-          seq_num: "19",
-          question:
-            "Question 19: By the time we got to the cinema, the movie _______.",
-          options: [
-            "A. has already started",
-            "B. had already started",
-            "C. will already start",
-            "D. already starts",
-          ],
-          answer: 1,
-          score: 5,
-        },
-        {
-          seq_num: "20",
-          question:
-            "Question 20: If you _______ more vegetables, you _______ healthier.",
-          options: ["A. eat", "B. will eat", "C. have eaten", "D. are eating"],
-          answer: 0,
-          score: 5,
-        },
-        // Add more questions here...
-      ],
-      questions_sub: [
-        {
-          seq_num: "1",
-          question:
-            "",
-          score: 20,
-        },
-        {
-          seq_num: "2",
-          question:
-            "",
-          score: 50,
-        },
-      ],
+      questions: [],
+      questions_sub: [],
       currentQuestionIndex: 0,
-      selectedOption: null,
+      subanswer: [],
     };
   },
   watch: {},
@@ -416,20 +210,106 @@ export default {
   updated() {},
   destoryed() {},
   methods: {
+    inputChange(e) {
+      this.$forceUpdate();
+    },
     init() {
+      console.log("init执行");
+      this.user_id = store.getters.userid;
       this.selected_onlineexam_id = this.$store.state.app.Examid;
-      onlineExamApi.getPaperId(this.selected_onlineexam_id).then((response) => {this.paperid = response.data.paperid});
+      onlineExamApi.getPaperId(this.selected_onlineexam_id).then((response) => {
+        this.paperid = response.data.paperid;
+      });
       onlineExamApi.getPaperInfo(this.paperid).then((response) => {
         this.questions = response.data.questions;
         this.questions_sub = response.data.questionsSub;
+        //初始化答题卡
+        onlineExamApi
+          .getSheetId(this.user_id, this.selected_onlineexam_id)
+          .then((response) => {
+            this.sheetid = response.data.answersheetId;
+            onlineExamApi.getSheet(this.sheetid).then((response) => {
+              this.selectedOptions = response.data.objlist;
+              this.questions_sub[0].answer = response.data.sublist[0];
+              this.questions_sub[1].answer = response.data.sublist[1];
+            });
+          });
       });
     },
     onSubmit() {
-      window.close();
-      this.$router.push("/stu_online_test/success");
+      var sheetinfo = {};
+      sheetinfo.answersheetId = this.sheetid;
+      sheetinfo.userId = this.user_id;
+      sheetinfo.examId = this.selected_onlineexam_id;
+      sheetinfo.answerTrans = this.questions_sub[0].answer;
+      sheetinfo.answerWriting = this.questions_sub[1].answer;
+      sheetinfo.answerObj1 = this.selectedOptions[0];
+      sheetinfo.answerObj2 = this.selectedOptions[1];
+      sheetinfo.answerObj3 = this.selectedOptions[2];
+      sheetinfo.answerObj4 = this.selectedOptions[3];
+      sheetinfo.answerObj5 = this.selectedOptions[4];
+      sheetinfo.answerObj6 = this.selectedOptions[5];
+      sheetinfo.answerObj7 = this.selectedOptions[6];
+      sheetinfo.answerObj8 = this.selectedOptions[7];
+      sheetinfo.answerObj9 = this.selectedOptions[8];
+      sheetinfo.answerObj10 = this.selectedOptions[9];
+      sheetinfo.answerObj11 = this.selectedOptions[10];
+      sheetinfo.answerObj12 = this.selectedOptions[11];
+      sheetinfo.answerObj13 = this.selectedOptions[12];
+      sheetinfo.answerObj14 = this.selectedOptions[13];
+      sheetinfo.answerObj15 = this.selectedOptions[14];
+      sheetinfo.answerObj16 = this.selectedOptions[15];
+      sheetinfo.answerObj17 = this.selectedOptions[16];
+      sheetinfo.answerObj18 = this.selectedOptions[17];
+      sheetinfo.answerObj19 = this.selectedOptions[18];
+      sheetinfo.answerObj20 = this.selectedOptions[19];
+      onlineExamApi.submitSheet(sheetinfo).then((response) => {
+        this.$message({
+          message: response.message,
+          type: "success",
+        });
+        window.close();
+        this.$router.push("/stu_online_test/success");
+      });
+    },
+    onSave() {
+      //获取信息
+      var sheetinfo = {};
+      sheetinfo.answersheetId = this.sheetid;
+      sheetinfo.userId = this.user_id;
+      sheetinfo.examId = this.selected_onlineexam_id;
+      sheetinfo.answerTrans = this.questions_sub[0].answer;
+      sheetinfo.answerWriting = this.questions_sub[1].answer;
+      sheetinfo.answerObj1 = this.selectedOptions[0];
+      sheetinfo.answerObj2 = this.selectedOptions[1];
+      sheetinfo.answerObj3 = this.selectedOptions[2];
+      sheetinfo.answerObj4 = this.selectedOptions[3];
+      sheetinfo.answerObj5 = this.selectedOptions[4];
+      sheetinfo.answerObj6 = this.selectedOptions[5];
+      sheetinfo.answerObj7 = this.selectedOptions[6];
+      sheetinfo.answerObj8 = this.selectedOptions[7];
+      sheetinfo.answerObj9 = this.selectedOptions[8];
+      sheetinfo.answerObj10 = this.selectedOptions[9];
+      sheetinfo.answerObj11 = this.selectedOptions[10];
+      sheetinfo.answerObj12 = this.selectedOptions[11];
+      sheetinfo.answerObj13 = this.selectedOptions[12];
+      sheetinfo.answerObj14 = this.selectedOptions[13];
+      sheetinfo.answerObj15 = this.selectedOptions[14];
+      sheetinfo.answerObj16 = this.selectedOptions[15];
+      sheetinfo.answerObj17 = this.selectedOptions[16];
+      sheetinfo.answerObj18 = this.selectedOptions[17];
+      sheetinfo.answerObj19 = this.selectedOptions[18];
+      sheetinfo.answerObj20 = this.selectedOptions[19];
+      onlineExamApi.updateSheet(sheetinfo).then((response) => {
+        this.$message({
+          message: response.message,
+          type: "success",
+        });
+      });
     },
     onResetClick(index) {
       this.questions_sub[index].answer = null;
+      this.$forceUpdate();
     },
     onSaveClick(index) {
       //this.questions_sub[index].answer = null

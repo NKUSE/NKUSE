@@ -120,8 +120,10 @@ export default {
   updated() {},
   destoryed() {},
   methods: {
-    request() {},
-    onButtonClick(examid) {
+    request() {
+      
+    },
+    onButtonClick() {
       onlineExamApi
         .getSheetId(this.user_id, this.selected_onlineexam_id)
         .then((response) => {
@@ -146,10 +148,11 @@ export default {
             var answersheetid = response.data.answersheetId;
             //检查是否有score
             onlineExamApi.checkScore(answersheetid).then((response) => {
-              if (response.hasScore != 0) {this.$message({
-                message: '已提交试卷，无法再次进入考试',
-                type: 'error'
-              })
+              if (response.data.hasScore != 0) {
+                this.$message({
+                  message: "已提交试卷，无法再次进入考试",
+                  type: "error",
+                });
               } else {
                 this.$store.dispatch(
                   "app/updateExamid",
