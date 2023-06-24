@@ -89,4 +89,37 @@ public class RegistinfoController {
         registinfoService.remove(wrapper);
         return Result.success("删除成功");
     }
+    @GetMapping("/getSheetId")
+    public Result<Map<String,Object>> getSheetId(@RequestParam("userId") String userId, @RequestParam("examId") Integer examId){
+        LambdaQueryWrapper<Registinfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Registinfo::getExamId, examId);
+        wrapper.eq(Registinfo::getUserId, userId);
+        Map<String,Object> res = new HashMap<>();
+        Registinfo record = registinfoService.getOne(wrapper);
+        Integer answersheetId = record.getAnswersheetId();
+        System.out.println(answersheetId);
+        if(answersheetId == 0) {
+            res.put("HasAnswersheet", 0);
+            res.put("answersheetId", 0);
+        }
+        else {
+
+            res.put("HasAnswersheet", 1);
+            res.put("answersheetId", answersheetId);
+        }
+        return Result.success(res);
+    }
+
+    @PutMapping("/setSheetId")
+    public Result<?> setSheetId(@RequestBody Registinfo reg){
+        LambdaQueryWrapper<Registinfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Registinfo::getExamId, reg.getExamId());
+        wrapper.eq(Registinfo::getUserId,
+                reg.getUserId());
+        Map<String,Object> res = new HashMap<>();
+        Registinfo record = registinfoService.getOne(wrapper);
+        record.setAnswersheetId(reg.getAnswersheetId());
+        registinfoService.update(record, wrapper);
+        return Result.success("修改成功");
+    }
 }

@@ -103,9 +103,7 @@ export default {
         email: "",
         phonenumber: "",
       },
-      examinfo: {
-
-      },
+      examinfo: {},
       selected_onlineexam_id: 0,
     };
   },
@@ -124,10 +122,44 @@ export default {
   methods: {
     request() {},
     onButtonClick(examid) {
-      console.log(examid);
-      console.log(this.selected_onlineexam_id);
-      this.$store.dispatch('app/updateExamid', this.selected_onlineexam_id);
-      this.$router.push("/stu_online_test/Testing");
+      onlineExamApi
+        .getSheetId(this.user_id, this.selected_onlineexam_id)
+        .then((response) => {
+          console.log(response.data.HasAnswersheet);
+          if (response.data.HasAnswersheet == 0) {
+            //创建新答题卡
+            var info = {};
+            info.userId = this.user_id;
+            info.examId = this.selected_onlineexam_id;
+            onlineExamApi.newAnswerSheet(info).then((response) => {
+              info.answersheetId = response.data.sheetId;
+              //更新registinfo
+              onlineExamApi.setSheetId(info).then((response) => {
+                this.$store.dispatch(
+                  "app/updateExamid",
+                  this.selected_onlineexam_id
+                );
+                this.$router.push("/stu_online_test/Testing");
+              });
+            });
+          } else {
+            var answersheetid = response.data.answersheetId;
+            //检查是否有score
+            onlineExamApi.checkScore(answersheetid).then((response) => {
+              if (response.hasScore != 0) {this.$message({
+                message: '已提交试卷，无法再次进入考试',
+                type: 'error'
+              })
+              } else {
+                this.$store.dispatch(
+                  "app/updateExamid",
+                  this.selected_onlineexam_id
+                );
+                this.$router.push("/stu_online_test/Testing");
+              }
+            });
+          }
+        });
     },
     getUserInfo() {
       this.user_id = store.getters.userid;

@@ -16,11 +16,11 @@ public class Answersheet implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private String answersheetId;
+    private Integer answersheetId;
 
     private String userId;
 
-    private String examId;
+    private Integer examId;
 
     private String answerTrans;
 
@@ -72,11 +72,11 @@ public class Answersheet implements Serializable {
 
     private Float scoreWriting;
 
-    public String getAnswersheetId() {
+    public Integer getAnswersheetId() {
         return answersheetId;
     }
 
-    public void setAnswersheetId(String answersheetId) {
+    public void setAnswersheetId(Integer answersheetId) {
         this.answersheetId = answersheetId;
     }
     public String getUserId() {
@@ -86,11 +86,11 @@ public class Answersheet implements Serializable {
     public void setUserId(String userId) {
         this.userId = userId;
     }
-    public String getExamId() {
+    public Integer getExamId() {
         return examId;
     }
 
-    public void setExamId(String examId) {
+    public void setExamId(Integer examId) {
         this.examId = examId;
     }
     public String getAnswerTrans() {

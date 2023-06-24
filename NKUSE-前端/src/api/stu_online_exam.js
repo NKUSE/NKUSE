@@ -40,5 +40,42 @@ export default {
                 paperId: paperId
             }
         })
+    },
+
+    getSheetId(userId, examId) {
+        return request({
+            url: '/cet/registinfo/getSheetId',
+            method: 'get',
+            params: {
+                userId: userId,
+                examId: examId
+            }
+        })
+    },
+
+    newAnswerSheet(info) {
+        return request({
+            url: '/cet/answersheet/newAnswerSheet',
+            method: 'post',
+            data: info
+        })
+    },
+
+    setSheetId(info) {
+        return request({
+            url: '/cet/registinfo/setSheetId',
+            method: 'put',
+            data: info
+        })
+    },
+
+    checkScore(sheetid) {
+        return request({
+            url: '/cet/answersheet/checkScore',
+            method: 'get',
+            params: {
+                sheetid: sheetid
+            }
+        })
     }
 }

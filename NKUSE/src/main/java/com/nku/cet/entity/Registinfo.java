@@ -28,7 +28,7 @@ public class Registinfo implements Serializable {
 
     private Integer paid;
 
-    private String answersheetId;
+    private Integer answersheetId;
 
     private Float score;
 
@@ -74,11 +74,11 @@ public class Registinfo implements Serializable {
     public void setPaid(Integer paid) {
         this.paid = paid;
     }
-    public String getAnswersheetId() {
+    public Integer getAnswersheetId() {
         return answersheetId;
     }
 
-    public void setAnswersheetId(String answersheetId) {
+    public void setAnswersheetId(Integer answersheetId) {
         this.answersheetId = answersheetId;
     }
     public Float getScore() {
