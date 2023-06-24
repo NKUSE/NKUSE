@@ -161,6 +161,7 @@
         </el-main>
       </el-container>
     </el-container>
+      <div class="countdown-section">考试剩余时间：{{ formatTime(countdown) }}</div>
   </div>
 </template>
 
@@ -173,6 +174,7 @@ export default {
   components: {},
   data() {
     return {
+      countdown: 7200, // 初始值为2小时（2小时 = 2 * 60 * 60秒）
       user_id: 0,
       selected_onlineexam_id: 1,
       paperid: 1,
@@ -205,11 +207,20 @@ export default {
     this.init();
   },
   beforeMount() {},
-  mounted() {},
+  mounted() {
+    setInterval(() => {
+      this.countdown -= 1;
+      if (this.countdown <= 0) {
+        clearInterval(); // 倒计时结束后停止计时器
+        this.onSubmit();
+      }
+    }, 1000);
+  },
   beforeUpdate() {},
   updated() {},
   destoryed() {},
   methods: {
+    
     inputChange(e) {
       this.$forceUpdate();
     },
@@ -335,7 +346,12 @@ export default {
       this.selectedOption = this.selectedOptions[index];
       this.selected[index] = true;
       this.currentQuestionType = "subjective";
-    },
+    },formatTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const formattedTime = `${hours}:${minutes.toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`;
+    return formattedTime;
+  },
   },
   fillter: {},
 };
@@ -413,5 +429,12 @@ export default {
   position: absolute;
   bottom: 10px;
   right: 10px;
+}
+.countdown-section {
+  
+  text-align: right;
+  font-weight: bold;
+  margin-right: 20px;font-size: 20px; /* 根据需要调整字体大小 */
+
 }
 </style>
