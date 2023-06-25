@@ -32,7 +32,6 @@
     </el-card>
 
     <el-card>
-    {{regList}}
       <el-table :data="regList" stripe style="width: 100%">
         <el-table-column prop="registId" label="报名ID" width="100">
         </el-table-column>

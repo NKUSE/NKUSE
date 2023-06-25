@@ -42,20 +42,50 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
+]
+export const asyncRoutes = [
   {
     path: '/',
+    meta: {
+      roles: ['stu']
+    },
     component: Layout,
     redirect: '/dashboard',
     children: [{
       path: 'dashboard',
       name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
+      component: () => import('@/views/stu-dashboard/index'),
       meta: { title: '首页', icon: 'dashboard', affix: true }
     }]
-  }
-]
-export const asyncRoutes = [
+  },
+  {
+    path: '/',
+    meta: {
+      roles: ['tea']
+    },
+    component: Layout,
+    redirect: '/dashboard',
+    children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/tea-dashboard/index'),
+      meta: { title: '首页', icon: 'dashboard', affix: true }
+    }]
+  },
+  {
+    path: '/',
+    meta: {
+      roles: ['adm']
+    },
+    component: Layout,
+    redirect: '/dashboard',
+    children: [{
+      path: 'dashboard',
+      name: 'Dashboard',
+      component: () => import('@/views/admin-dashboard/index'),
+      meta: { title: '首页', icon: 'dashboard', affix: true }
+    }]
+  },
   {
     path: '/stu_sign_up',
     meta: {

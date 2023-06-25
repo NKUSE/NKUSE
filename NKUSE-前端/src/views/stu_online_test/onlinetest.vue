@@ -211,10 +211,10 @@ export default {
     setInterval(() => {
       this.countdown -= 1;
       if (this.countdown <= 0) {
-        clearInterval(); // 倒计时结束后停止计时器
-        this.onSubmit();
+        clearInterval() // 倒计时结束后停止计时器
+        this.onSubmit()
       }
-    }, 1000);
+    }, 1000)
   },
   beforeUpdate() {},
   updated() {},

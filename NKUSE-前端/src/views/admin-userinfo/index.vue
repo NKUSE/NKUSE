@@ -46,6 +46,9 @@
         <el-table-column prop="userIDnumber" label="用户证件号" width="130">
         </el-table-column>
         <el-table-column prop="userRole" label="用户身份" width="130">
+          <template slot-scope="scope">
+            <span>{{ getUserRole(scope.row.userRole) }}</span>
+          </template>
         </el-table-column>
         <el-table-column prop="options" label="操作">
           <template slot-scope="scope">
@@ -173,6 +176,17 @@ export default {
         this.userList = response.data.rows;
         this.total = response.data.total;
       });
+    },
+    getUserRole(state){
+      if (state === 1) {
+        return '学生'
+      } else if (state === 2) {
+        return '教师'
+      } else if (state === 3) {
+        return '管理员'
+      } else {
+        return '学生'
+      }
     },
     newUser() {},
     openNewUI() {
