@@ -91,6 +91,9 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
         map.put("idnumber",User.getUserIdnumber());
         map.put("email",User.getUserEmail());
         map.put("phonenumber",User.getUserPhonenumber());
+        map.put("password",User.getUserPassword());
         return map;
     }
+
+
 }

@@ -115,6 +115,7 @@ public class UserinfoController {
         userinfoService.remove(wrapper);
         return Result.success("删除成功");
     }
+
     @GetMapping("/getInfoById")
     public Result<Map<String, Object>> getInfoById(@RequestParam("user_id") String userid) {
         Map<String, Object> res = userinfoService.getUserAllInfo(userid);
