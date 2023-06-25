@@ -142,8 +142,14 @@ export default {
     };
   },
   methods: {
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    handleSizeChange(pageSize) {
+      this.searchModel.pageSize = pageSize;
+      this.getAllRoom();
+    },
+    handleCurrentChange(pageNo) {
+      this.searchModel.pageNo = pageNo;
+      this.getAllRoom();
+    },
     getOneRoom() {
       roomApi.getOneRoom(this.searchModel).then((response) => {
         this.roomList = response.data.rows;

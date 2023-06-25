@@ -163,8 +163,15 @@ export default {
     };
   },
   methods: {
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    
+    handleSizeChange(pageSize) {
+      this.searchModel.pageSize = pageSize;
+      this.getAllUser();
+    },
+    handleCurrentChange(pageNo) {
+      this.searchModel.pageNo = pageNo;
+      this.getAllUser();
+    },
     getOneUser() {
       userApi.getOneUser(this.searchModel).then((response) => {
         this.userList = response.data.rows;

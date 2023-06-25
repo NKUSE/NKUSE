@@ -183,8 +183,14 @@ export default {
     };
   },
   methods: {
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    handleSizeChange(pageSize) {
+      this.searchModel.pageSize = pageSize;
+      this.getAllQuestions();
+    },
+    handleCurrentChange(pageNo) {
+      this.searchModel.pageNo = pageNo;
+      this.getAllQuestions();
+    },
     getOneQuestion() {
       quesApi.getOneQuestion(this.searchModel).then((response) => {
         this.quesList = response.data.rows;

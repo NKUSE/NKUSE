@@ -1,48 +1,16 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
+    <el-form
+      ref="loginForm"
+      :model="loginForm"
+      :rules="loginRules"
+      class="login-form"
+      auto-complete="on"
+      label-position="left"
+    >
       <div class="title-container">
         <h3 class="title">欢迎来到六级报考系统</h3>
       </div>
-      <el-form-item label="考试省份" prop="region">
-        <el-select v-model="loginForm.region" placeholder="请选择考试省份">
-          <el-option label="北京" value="beijing"></el-option>
-          <el-option label="天津" value="tianjin"></el-option>
-          <el-option label="河北" value="hebei"></el-option>
-          <el-option label="山西" value="shanxi"></el-option>
-          <el-option label="内蒙古" value="neimenggu"></el-option>
-          <el-option label="辽宁" value="liaoning"></el-option>
-          <el-option label="吉林" value="jilin"></el-option>
-          <el-option label="黑龙江" value="heilongjiang"></el-option>
-          <el-option label="上海" value="shanghai"></el-option>
-          <el-option label="江苏" value="jiangsu"></el-option>
-          <el-option label="浙江" value="zhejiang"></el-option>
-          <el-option label="安徽" value="anhui"></el-option>
-          <el-option label="福建" value="fujian"></el-option>
-          <el-option label="江西" value="jiangxi"></el-option>
-          <el-option label="山东" value="shandong"></el-option>
-          <el-option label="河南" value="henan"></el-option>
-          <el-option label="湖北" value="hubei"></el-option>
-          <el-option label="湖南" value="hunan"></el-option>
-          <el-option label="广东" value="guangdong"></el-option>
-          <el-option label="广西" value="guangxi"></el-option>
-          <el-option label="海南" value="hainan"></el-option>
-          <el-option label="重庆" value="chongqing"></el-option>
-          <el-option label="四川" value="sichuan"></el-option>
-          <el-option label="贵州" value="guizhou"></el-option>
-          <el-option label="云南" value="yunnan"></el-option>
-          <el-option label="西藏" value="xizang"></el-option>
-          <el-option label="陕西" value="shanxi1"></el-option>
-          <el-option label="甘肃" value="gansu"></el-option>
-          <el-option label="青海" value="qinghai"></el-option>
-          <el-option label="宁夏" value="ningxia"></el-option>
-          <el-option label="新疆" value="xinjiang"></el-option>
-          <el-option label="台湾" value="taiwan"></el-option>
-          <el-option label="香港" value="xianggang"></el-option>
-          <el-option label="澳门" value="aomen"></el-option>
-        </el-select>
-      </el-form-item>
       <el-form-item prop="username">
         <span class="svg-container">
           <svg-icon icon-class="user" />
@@ -74,97 +42,247 @@
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          <svg-icon
+            :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
+          />
         </span>
       </el-form-item>
 
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">登录</el-button>
-
-      
-
+      <el-button
+        :loading="loading"
+        type="primary"
+        style="width: 100%; margin-bottom: 10px"
+        @click.native.prevent="handleLogin"
+        >登录</el-button
+      >
+      <el-button
+        style="width: 100%; margin-bottom: 20px; margin-left: 0px"
+        @click.native.prevent="handleRegist"
+        >注册</el-button
+      >
     </el-form>
+    <el-dialog
+      class="Regdialog"
+      title="用户注册"
+      :visible.sync="dialogFormVisible"
+    >
+      <el-form :model="userForm" ref="userFormRef" :rules="rules">
+        <el-form-item
+          label="用户id"
+          :label-width="formLabelWidth"
+          prop="userId"
+        >
+          <el-input v-model="userForm.userId" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item
+          label="密码"
+          :label-width="formLabelWidth"
+          prop="userPassword"
+        >
+          <el-input
+            v-model="userForm.userPassword"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item
+          label="邮箱"
+          :label-width="formLabelWidth"
+          prop="userEmail"
+        >
+          <el-input v-model="userForm.userEmail" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item
+          label="姓名"
+          :label-width="formLabelWidth"
+          prop="userName"
+        >
+          <el-input v-model="userForm.userName" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item
+          label="证件号"
+          :label-width="formLabelWidth"
+          prop="userIDnumber"
+        >
+          <el-input
+            v-model="userForm.userIDnumber"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+        <el-form-item
+          label="手机号"
+          :label-width="formLabelWidth"
+          prop="userPhonenumber"
+        >
+          <el-input
+            v-model="userForm.userPhonenumber"
+            autocomplete="off"
+          ></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="clearForm()">取 消</el-button>
+        <el-button type="primary" @click="submitForm()">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-
+import { validUsername } from "@/utils/validate";
+import UserApi from "@/api/all_regist";
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
+        callback(new Error("请输入正确的用户名"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('密码不能少于6位'))
+      if (value.length < 0) {
+        callback(new Error("密码不能少于6位"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
+      formLabelWidth: "80px",
+      userForm: {},
+      dialogFormVisible: false,
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: "admin",
+        password: "111111",
       },
       loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        username: [
+          { required: true, trigger: "blur", validator: validateUsername },
+        ],
+        password: [
+          { required: true, trigger: "blur", validator: validatePassword },
+        ],
       },
       loading: false,
-      passwordType: 'password',
-      redirect: undefined
-    }
+      passwordType: "password",
+      redirect: undefined,
+      rules: {
+        userId: [
+          { required: true, message: "请输入用户ID", trigger: "blur" },
+          {
+            pattern: /^\d{6}$/,
+            message: "用户ID必须为6位数字",
+            trigger: "blur",
+          },
+        ],
+        userPassword: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+        ],
+        userEmail: [
+          { required: false, message: "请输入邮箱", trigger: "blur" },
+          {
+            type: "email",
+            message: "请输入有效的邮箱",
+            trigger: ["blur", "change"],
+          },
+        ],
+        userName: [{ required: true, message: "请输入姓名", trigger: "blur" }],
+        userIDnumber: [
+          { required: false, message: "请输入证件号", trigger: "blur" },
+        ],
+        userPhonenumber: [
+          { required: false, message: "请输入手机号", trigger: "blur" },
+          {
+            pattern: /^\d{11}$/,
+            message: "手机号格式不正确",
+            trigger: ["blur", "change"],
+          },
+        ],
+      },
+    };
   },
   watch: {
     $route: {
-      handler: function(route) {
-        this.redirect = route.query && route.query.redirect
+      handler: function (route) {
+        this.redirect = route.query && route.query.redirect;
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
+      if (this.passwordType === "password") {
+        this.passwordType = "";
       } else {
-        this.passwordType = 'password'
+        this.passwordType = "password";
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
+        this.$refs.password.focus();
+      });
     },
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
-            this.loading = false
-          }).catch(() => {
-            this.loading = false
-          })
+          this.loading = true;
+          this.$store
+            .dispatch("user/login", this.loginForm)
+            .then(() => {
+              this.$router.push({ path: this.redirect || "/" });
+              this.loading = false;
+            })
+            .catch(() => {
+              this.loading = false;
+            });
         } else {
-          console.log('error submit!!')
-          return false
+          console.log("error submit!!");
+          return false;
         }
-      })
-    }
-  }
-}
+      });
+    },
+    submitForm() {
+      this.$refs.userFormRef.validate((valid) => {
+        if (valid) {
+          UserApi.regist(this.userForm).then((response) => {
+            this.dialogFormVisible = true;
+            this.userForm.userRole = 1;
+            if (response.code == 20001) {
+              this.$message({
+                message: response.message,
+                type: "error",
+              });
+              return false;
+            } else {
+              this.$message({
+                message: "注册成功",
+                type: "success",
+              });
+              this.dialogFormVisible = false;
+              return true;
+            }
+          });
+        } else {
+          return false;
+        }
+      });
+    },
+    clearForm() {
+      this.dialogFormVisible = false;
+    },
+    handleRegist() {
+      this.dialogFormVisible = true;
+      this.userForm.userRole = 1;
+      return true;
+    },
+  },
+};
 </script>
 
 <style lang="scss">
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg:#283443;
-$light_gray:#fff;
+$bg: #283443;
+$light_gray: #fff;
 $cursor: #fff;
 
 @supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
@@ -203,13 +321,29 @@ $cursor: #fff;
     border-radius: 5px;
     color: #454545;
   }
+
+  .el-dialog__body {
+    background-color: $bg;
+    border: 0;
+  }
+  .el-dialog__header {
+    background-color: $bg;
+    border: 0;
+  }
+  .el-dialog__footer {
+    background-color: $bg;
+    border: 0;
+  }
+  .el-dialog__title {
+    color: #fff;
+  }
 }
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
-$dark_gray:#889aa4;
-$light_gray:#eee;
+$bg: #2d3a4b;
+$dark_gray: #889aa4;
+$light_gray: #eee;
 
 .login-container {
   min-height: 100%;
@@ -217,11 +351,11 @@ $light_gray:#eee;
   background-color: $bg;
   overflow: hidden;
 
-  background-image: url('../../assets/bg5.png');
+  background-image: url("../../assets/bg5.png");
   background-size: 100%;
 
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
 
   .login-form {
     position: relative;
@@ -231,8 +365,8 @@ $light_gray:#eee;
     margin: 0 auto;
     overflow: hidden;
     background-color: #283443;
-    border-radius:8px;
-    opacity:0.9;
+    border-radius: 8px;
+    opacity: 0.9;
   }
 
   .tips {

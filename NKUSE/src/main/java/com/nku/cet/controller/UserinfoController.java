@@ -99,6 +99,19 @@ public class UserinfoController {
         return Result.success("新增成功");
     }
 
+    @PostMapping("/regist")
+    public Result<?> regist(@RequestBody Userinfo user){
+
+        String userId = user.getUserId();
+        LambdaQueryWrapper<Userinfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Userinfo::getUserId, userId);
+        if(userinfoService.getOne(wrapper) != null){
+            return Result.fail(20001,"该ID已被注册");
+        }
+        userinfoService.save(user);
+        return Result.success("新增成功");
+    }
+
     @PutMapping("/updateUser")
     public Result<?> updateUser(@RequestBody Userinfo user){
         String userId = user.getUserId();

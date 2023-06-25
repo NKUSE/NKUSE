@@ -157,8 +157,14 @@ export default {
     };
   },
   methods: {
-    handleSizeChange() {},
-    handleCurrentChange() {},
+    handleSizeChange(pageSize) {
+      this.searchModel.pageSize = pageSize;
+      this.getAllRegInfo();
+    },
+    handleCurrentChange(pageNo) {
+      this.searchModel.pageNo = pageNo;
+      this.getAllRegInfo();
+    },
     getOneInfo() {
       regApi.getOneInfo(this.searchModel).then((response) => {
         this.regList = response.data.rows;

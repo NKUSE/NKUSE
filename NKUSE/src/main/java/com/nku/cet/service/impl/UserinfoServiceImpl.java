@@ -58,6 +58,9 @@ public class UserinfoServiceImpl extends ServiceImpl<UserinfoMapper, Userinfo> i
             data.put("avatar", "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
             //Integer role = this.baseMapper.getRoleNameByUserId(loginUser.getUserId());
             LinkedList<String> roles = new LinkedList<>();
+            //if(loginUser.getUserRole() == null) {
+            //    roles.add("stu");
+            //}
             switch (loginUser.getUserRole()) {
                 default:
                 case 1:
