@@ -213,7 +213,6 @@
         <el-row> {{ paperInfoForm.questionWriting }} </el-row>
       </el-card>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="ViewFinished()">编 辑</el-button>
         <el-button type="primary" @click="ViewFinished()">确 定</el-button>
       </div>
     </el-dialog>

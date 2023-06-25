@@ -25,7 +25,6 @@
       :visible.sync="dialogFormVisible"
       :before-close="handleClose"
     >
-      {{ this.examInfoForm }}
       <el-form ref="examInfoFormRef" :model="examInfoForm" :rules="rules">
 
         <!--<el-form-item
