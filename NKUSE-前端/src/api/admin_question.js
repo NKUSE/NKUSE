@@ -54,5 +54,12 @@ export default{
                 quesId: id,
             }
         })
-    }
+    },
+    
+    getMaximumQuestionId() {
+        return request({
+          url: '/cet/objQues/maxId',
+          method: 'get'
+        })
+      },
 }

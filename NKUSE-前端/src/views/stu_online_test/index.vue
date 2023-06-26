@@ -33,10 +33,13 @@
         <div class="text item" v-if="item.examState === 3">
             {{"考试状态 : "}}<el-tag type="info">已结束</el-tag>
         </div>
+        <div class="text item" v-if="item.examState === 4">
+            {{"考试状态 : "}}<el-tag type="info">已结束</el-tag>
+        </div>
         <div class="text item">
           <el-button
             type="primary"
-            v-bind:disabled="checkDate(item.time)"
+            v-bind:disabled="item.examState !== 2"
             @click="onButtonClick(item.examId)"
             size="small"
             style="float: right"

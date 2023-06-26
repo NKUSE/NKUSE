@@ -38,6 +38,9 @@ public class AnswersheetController {
     @PostMapping("/newAnswerSheet")
     public Result<Map<String, Object> > newAnswerSheet(@RequestBody Answersheet answersheet){
         answersheet.setScoreObj(-1.0f);
+        long maxSheetId = answersheetService.getBaseMapper().getMaximumSheetId();
+        Integer nextid =  (int)maxSheetId + 1;
+        answersheet.setAnswersheetId(nextid);
         answersheetService.save(answersheet);
         Map<String, Object> res = new HashMap<>();
         String Userid = answersheet.getUserId();
@@ -316,5 +319,13 @@ public class AnswersheetController {
 
         answersheetService.update(answersheet, wrapper);
         return Result.success("保存成功");
+    }
+
+    @GetMapping("/maxId")
+    public Result<Map<String, Object>> getMaximumSheetId() {
+        long maxSheetId = answersheetService.getBaseMapper().getMaximumSheetId();
+        Map<String, Object> res = new HashMap<>();
+        res.put("maximumSheetId", maxSheetId);
+        return Result.success(res);
     }
 }

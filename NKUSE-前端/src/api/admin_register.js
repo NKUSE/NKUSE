@@ -52,5 +52,12 @@ export default{
                 regId: id,
             }
         });
-    }
+    },
+    
+    getMaximumRegistId() {
+        return request({
+          url: '/cet/registinfo/maxId',
+          method: 'get'
+        })
+      },
 }

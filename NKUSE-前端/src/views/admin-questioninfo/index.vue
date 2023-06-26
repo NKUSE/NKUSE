@@ -125,6 +125,7 @@ export default {
   name: "app",
   data() {
     return {
+      quesIdCounter: 0,
       formLabelWidth: "80px",
       title: "",
       dialogFormVisible: false,
@@ -183,6 +184,14 @@ export default {
     };
   },
   methods: {
+    // 获取已存在考试的最大 examId 值
+    getMaximumQuestionId() {
+      // 调用接口或查询数据库，获取最大 examId 值
+      quesApi.getMaximumQuestionId().then((response) => {
+        // 将 examIdCounter 初始化为已存在的最大 examId 值加一
+        this.quesIdCounter = response.data.maximumExamId + 1;
+      });
+    },
     handleSizeChange(pageSize) {
       this.searchModel.pageSize = pageSize;
       this.getAllQuestions();
@@ -207,6 +216,8 @@ export default {
     openNewUI() {
       this.title = "新增题目";
       this.dialogFormVisible = true;
+      this.quesForm = {}; // 清空表单数据
+      this.quesForm.questionId = this.quesIdCounter;
     },
     openEditUI(id) {
       this.title = "更新题目";
@@ -224,6 +235,8 @@ export default {
       if (this.title == "新增题目") {
         this.$refs.quesFormRef.validate((valid) => {
           if (valid) {
+            this.quesForm.questionId = this.quesIdCounter;
+            this.quesIdCounter++;
             quesApi.newQuestion(this.quesForm).then((response) => {
               this.dialogFormVisible = false;
               this.$message({
@@ -268,6 +281,7 @@ export default {
   },
   created() {
     this.getAllQuestions(this.searchModel);
+    this.getMaximumQuestionId();
   },
 };
 </script>

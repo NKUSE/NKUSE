@@ -54,5 +54,11 @@ export default{
                 roomId: id,
             }
         })
-    }
+    },
+    getMaximumExamroomId() {
+        return request({
+          url: '/cet/Room/maxId',
+          method: 'get'
+        })
+      },
 }

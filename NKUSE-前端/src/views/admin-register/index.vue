@@ -81,18 +81,34 @@
       :total="total"
     >
     </el-pagination>
-    <el-dialog :title="title" :visible.sync="dialogFormVisible" @close="clearForm">
-      <el-form :model="regForm" ref="regFormRef" :rules="rules" >
-        <el-form-item label="用户ID" :label-width="formLabelWidth" prop="userId">
+    <el-dialog
+      :title="title"
+      :visible.sync="dialogFormVisible"
+      @close="clearForm"
+    >
+      <el-form :model="regForm" ref="regFormRef" :rules="rules">
+        <el-form-item
+          label="用户ID"
+          :label-width="formLabelWidth"
+          prop="userId"
+        >
           <el-input v-model="regForm.userId" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="考试场次" :label-width="formLabelWidth" prop="examId">
+        <el-form-item
+          label="考试场次"
+          :label-width="formLabelWidth"
+          prop="examId"
+        >
           <el-input v-model="regForm.examId" autocomplete="off"></el-input>
         </el-form-item>
         <el-form-item label="考场" :label-width="formLabelWidth" prop="roomId">
           <el-input v-model="regForm.roomId" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="座位号" :label-width="formLabelWidth" prop="seatNumber">
+        <el-form-item
+          label="座位号"
+          :label-width="formLabelWidth"
+          prop="seatNumber"
+        >
           <el-input v-model="regForm.seatNumber" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -100,17 +116,18 @@
         <el-button @click="clearForm()">取 消</el-button>
         <el-button type="primary" @click="submitForm()">确 定</el-button>
       </div>
-    </el-dialog>    
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import regApi from "@/api/admin_register";
-import { resetRouter } from '@/router';
+import { resetRouter } from "@/router";
 export default {
   name: "app",
   data() {
     return {
+      RegistIdCounter: 0,
       formLabelWidth: "80px",
       title: "",
       dialogFormVisible: false,
@@ -123,40 +140,45 @@ export default {
       },
       regList: [],
       rules: {
-        userId:[
+        userId: [
           {
             required: true,
             message: "请输入用户ID",
             trigger: "blur",
-          }
+          },
         ],
-        examId:[
+        examId: [
           {
-            required:true,
-            message:"请输入考试场次",
-            trigger:"blur",
-          }
+            required: true,
+            message: "请输入考试场次",
+            trigger: "blur",
+          },
         ],
-        roomId:[
+        roomId: [
           {
-            required:true,
-            message:"请输入考场",
-            trigger:"blur",
-          }
+            required: true,
+            message: "请输入考场",
+            trigger: "blur",
+          },
         ],
-        seatNumber:[
+        seatNumber: [
           {
-            required:true,
-            message:"请输入座位号",
-            trigger:"blur",
-          }
+            required: true,
+            message: "请输入座位号",
+            trigger: "blur",
+          },
         ],
-
-
       },
     };
   },
   methods: {
+    getMaximumRegId() {
+      // 调用接口或查询数据库，获取最大 examId 值
+      regApi.getMaximumRegistId().then((response) => {
+        // 将 examIdCounter 初始化为已存在的最大 examId 值加一
+        this.RegistIdCounter = response.data.maximumRegistId + 1;
+      });
+    },
     handleSizeChange(pageSize) {
       this.searchModel.pageSize = pageSize;
       this.getAllRegInfo();
@@ -180,12 +202,14 @@ export default {
     openNewUI() {
       this.title = "新增报名";
       this.dialogFormVisible = true;
+      this.regForm = {}; // 清空表单数据
+      this.regForm.registId = this.RegistIdCounter;
     },
     openEditUI(id) {
       this.title = "编辑信息";
       //this.$refs.regFormRef.userId=0;
       this.dialogFormVisible = true;
-      
+
       regApi._getOneInfo(id).then((response) => {
         this.regForm = response.data.rows[0];
       });
@@ -198,15 +222,17 @@ export default {
     getPaidState(state) {
       // 根据考试状态的数值返回相应的字符串
       if (state === 1) {
-        return '已缴费'
+        return "已缴费";
       } else if (state === 0) {
-        return '未缴费'
+        return "未缴费";
       }
     },
     submitForm() {
-      if ((this.title == "新增报名")) {
+      if (this.title == "新增报名") {
         this.$refs.regFormRef.validate((valid) => {
           if (valid) {
+            this.regForm.registId = this.RegistIdCounter;
+            this.RegistIdCounter++;
             regApi.newReg(this.regForm).then((response) => {
               this.dialogFormVisible = false;
               this.$message({
@@ -244,13 +270,13 @@ export default {
     },
     deleteById(id) {
       regApi.deleteReg(id).then((response) => {
-          
-      this.getAllRegInfo();
+        this.getAllRegInfo();
       });
-    }
+    },
   },
-  created() {  
+  created() {
     this.getAllRegInfo(this.searchModel);
+    this.getMaximumRegId();
   },
 };
 </script>

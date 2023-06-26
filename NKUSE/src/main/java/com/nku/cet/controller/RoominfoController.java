@@ -87,6 +87,14 @@ public class RoominfoController {
         RoominfoService.remove(wrapper);
         return Result.success("删除成功");
     }
+
+    @GetMapping("/maxId")
+    public Result<Map<String, Object>> getMaximumRoomId() {
+        long maxRoomId = RoominfoService.getBaseMapper().getMaximumRoomId();
+        Map<String, Object> res = new HashMap<>();
+        res.put("maximumRoomId", maxRoomId);
+        return Result.success(res);
+    }
 }
 
 

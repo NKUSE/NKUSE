@@ -105,6 +105,7 @@ export default {
   name: "app",
   data() {
     return {
+      ExamroomIdCounter: 0,
       formLabelWidth: "80px",
       title: "",
       dialogFormVisible: false,
@@ -142,6 +143,13 @@ export default {
     };
   },
   methods: {
+    getMaximumExamroomId() {
+      // 调用接口或查询数据库，获取最大 examId 值
+      roomApi.getMaximumExamroomId().then((response) => {
+        // 将 examIdCounter 初始化为已存在的最大 examId 值加一
+        this.ExamroomIdCounter = response.data.maximumExamroomId + 1
+      })
+    },
     handleSizeChange(pageSize) {
       this.searchModel.pageSize = pageSize;
       this.getAllRoom();
@@ -166,6 +174,8 @@ export default {
     openNewUI() {
       this.title = "新增考场";
       this.dialogFormVisible = true;
+      this.roomForm = {} // 清空表单数据
+      this.roomForm.roomId = this.ExamroomIdCounter
     },
     openEditUI(id) {
       this.title = "更新考场";
@@ -183,6 +193,9 @@ export default {
       if ((this.title == "新增考场")) {
         this.$refs.roomFormRef.validate((valid) => {
           if (valid) {
+            
+            this.roomForm.roomId = this.ExamroomIdCounter
+            this.ExamroomIdCounter++
             roomApi.newRoom(this.roomForm).then((response) => {
               this.dialogFormVisible = false;
               this.$message({
@@ -226,6 +239,7 @@ export default {
   },
   created() {
     this.getAllRoom(this.searchModel);
+    this.getMaximumExamroomId();
   },
 };
 </script>

@@ -190,7 +190,6 @@ export default {
     },
     editObjective(id) {
       this.title = '更新考试信息'
-      // this.examInfoForm.examId = this.examIdCounter
       this.dialogFormVisible = true
       examInfoApi.getOneExamInfo(id).then((response) => {
         this.examInfoForm = response.data.rows[0]

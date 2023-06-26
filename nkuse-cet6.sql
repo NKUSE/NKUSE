@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50738
 File Encoding         : 65001
 
-Date: 2023-06-25 22:20:01
+Date: 2023-06-26 15:20:03
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,13 +52,17 @@ CREATE TABLE `cet6_answersheet` (
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `exam_id` (`exam_id`) USING BTREE,
   CONSTRAINT `cet6_answersheet_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `cet6_userinfo` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of cet6_answersheet
 -- ----------------------------
 INSERT INTO `cet6_answersheet` VALUES ('1', '000001', '00001', '翻译答案', '写作答案', '1', '1', '1', '1', '2', '3', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '2', null, null, null);
 INSERT INTO `cet6_answersheet` VALUES ('8', '000001', '2', '12341111213231213213231321213wqe王企鹅111111231243122341134321434134234', '14334223434', '1', '0', '2', '3', '3', '2', '1', '0', '2', '2', '0', '1', '1', '2', '3', '0', '1', '1', '1', '2', '6', null, null);
+INSERT INTO `cet6_answersheet` VALUES ('9', '000001', '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '-1', null, null);
+INSERT INTO `cet6_answersheet` VALUES ('10', '000001', '1', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `cet6_answersheet` VALUES ('11', '000001', '3', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '-1', null, null);
+INSERT INTO `cet6_answersheet` VALUES ('12', '000001', '4', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '-1', null, null);
 
 -- ----------------------------
 -- Table structure for `cet6_enum_examstate`
@@ -115,7 +119,7 @@ CREATE TABLE `cet6_examinfo` (
 INSERT INTO `cet6_examinfo` VALUES ('0', 'cet6-1', '9', '2023-05-31 16:00:00', '4', '10');
 INSERT INTO `cet6_examinfo` VALUES ('1', 'cet6-2', '10', '2023-06-19 16:00:00', '3', '10');
 INSERT INTO `cet6_examinfo` VALUES ('2', 'cet6-3', '11', '2023-06-29 16:00:00', '2', '2');
-INSERT INTO `cet6_examinfo` VALUES ('3', 'cet6-4', '12', '2023-06-30 16:00:00', '1', '12');
+INSERT INTO `cet6_examinfo` VALUES ('3', 'cet6-4', '12', '2023-06-30 16:00:00', '2', '12');
 INSERT INTO `cet6_examinfo` VALUES ('4', 'cet6-5', null, '2023-06-29 16:00:00', '1', '20');
 
 -- ----------------------------
@@ -131,7 +135,7 @@ CREATE TABLE `cet6_obj_ques` (
   `option_D` varchar(255) DEFAULT NULL,
   `answer` int(11) DEFAULT NULL,
   PRIMARY KEY (`question_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=57 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of cet6_obj_ques
@@ -186,6 +190,8 @@ INSERT INTO `cet6_obj_ques` VALUES ('53', 'Who is the author of the novel \"The 
 INSERT INTO `cet6_obj_ques` VALUES ('54', 'Which city is the capital of Russia?', 'Moscow', 'St. Petersburg', 'Kiev', 'Berlin', '1');
 INSERT INTO `cet6_obj_ques` VALUES ('55', 'Who wrote the play \"Romeo and Juliet\"?', 'William Shakespeare', 'Oscar Wilde', 'George Bernard Shaw', 'Samuel Beckett', '1');
 INSERT INTO `cet6_obj_ques` VALUES ('56', 'What is the chemical symbol for silver?', 'Ag', 'Au', 'Cu', 'Fe', '1');
+INSERT INTO `cet6_obj_ques` VALUES ('99', 'test', 'a', 'b', 'c', 'd', '1');
+INSERT INTO `cet6_obj_ques` VALUES ('100', 'test2', 'a', 'b', 'c', 'd', '1');
 
 -- ----------------------------
 -- Table structure for `cet6_paperinfo`
@@ -222,14 +228,6 @@ CREATE TABLE `cet6_paperinfo` (
 -- ----------------------------
 -- Records of cet6_paperinfo
 -- ----------------------------
-INSERT INTO `cet6_paperinfo` VALUES ('1', '1', '1', '1', '1', '1', '1', '1', '2', '1', '1', '2', '1', '2', '1', '2', '1', '2', '1', '2', '1', '翻译1', '写作1');
-INSERT INTO `cet6_paperinfo` VALUES ('2', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '翻译', '写作');
-INSERT INTO `cet6_paperinfo` VALUES ('3', '2', '2', '2', '2', '2', '1', '1', '1', '1', '1', '2', '2', '2', '2', '2', '1', '1', '1', '1', '1', '翻译', '写作');
-INSERT INTO `cet6_paperinfo` VALUES ('4', '2', '2', '2', '2', '2', '1', '1', '1', '1', '1', '2', '2', '2', '2', '2', '1', '1', '1', '1', '1', '翻译', '写作');
-INSERT INTO `cet6_paperinfo` VALUES ('5', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'fanyi', 'xiezuo');
-INSERT INTO `cet6_paperinfo` VALUES ('6', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'fanyi', 'xiezuo');
-INSERT INTO `cet6_paperinfo` VALUES ('7', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', 'fanyi', 'xiezuo');
-INSERT INTO `cet6_paperinfo` VALUES ('8', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '翻译', '写作');
 INSERT INTO `cet6_paperinfo` VALUES ('9', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '翻译以下内容：\\n端午节，又称端阳节、龙舟节、重午节、重五节、天中节等，日期在每年农历五月初五，是集拜神祭祖、祈福辟邪、欢庆娱乐和饮食为一体的民俗大节。端午节源于自然天象崇拜，由上古时代祭龙演变而来。仲夏端午，苍龙七宿飞升于正南中央，处在全年最“中正”之位，正如《易经·乾卦》第五爻：“飞龙在天”。端午是“飞龙在天”吉祥日，龙及龙舟文化始终贯穿在端午节的传承历史中。', '按照以下要求完成写作：\\n要求：自由选题，自由发挥');
 INSERT INTO `cet6_paperinfo` VALUES ('10', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '翻译以下句子：\\n2018年9月27日，联合国将最高级别的环保荣誉“地球卫士奖”授予了中国浙江省“千村示范、万村整治”工程。“千万工程”为全球环境治理提供了中国方案。', '以“端午节”为话题写一篇20000字的作文');
 INSERT INTO `cet6_paperinfo` VALUES ('11', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '翻译：\\n“千万工程”的生动实践有力说明，这是一条高质量发展之路，是坚持“人民至上”理念的实践之路，是不断实现人民对美好生活向往的奋进之路。“美丽乡村”万千气象，铺展现实版...', '以“如果精神有颜色它一定在其中”为题写一篇作文');
@@ -252,12 +250,16 @@ CREATE TABLE `cet6_registinfo` (
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `room_id` (`room_id`) USING BTREE,
   KEY `answerSheet_id` (`answerSheet_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of cet6_registinfo
 -- ----------------------------
-INSERT INTO `cet6_registinfo` VALUES ('1', '0', '000001', '1', '1', '1', '8', null);
+INSERT INTO `cet6_registinfo` VALUES ('1', '0', '000001', '1', '1', '1', '9', null);
+INSERT INTO `cet6_registinfo` VALUES ('2', '4', '000001', '1', '1', '1', '12', null);
+INSERT INTO `cet6_registinfo` VALUES ('3', '3', '000001', '1', '1', '1', '11', null);
+INSERT INTO `cet6_registinfo` VALUES ('8', '4', '000002', '1', '1', '1', null, null);
+INSERT INTO `cet6_registinfo` VALUES ('9', '4', '000012', '1', '1', '1', null, null);
 
 -- ----------------------------
 -- Table structure for `cet6_roominfo`
@@ -269,7 +271,7 @@ CREATE TABLE `cet6_roominfo` (
   `place` varchar(255) DEFAULT NULL,
   `capacity` int(11) DEFAULT NULL,
   PRIMARY KEY (`room_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of cet6_roominfo

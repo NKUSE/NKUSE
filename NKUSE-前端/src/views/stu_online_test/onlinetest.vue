@@ -161,7 +161,9 @@
         </el-main>
       </el-container>
     </el-container>
-      <div class="countdown-section">考试剩余时间：{{ formatTime(countdown) }}</div>
+    <div class="countdown-section">
+      考试剩余时间：{{ formatTime(countdown) }}
+    </div>
   </div>
 </template>
 
@@ -211,16 +213,15 @@ export default {
     setInterval(() => {
       this.countdown -= 1;
       if (this.countdown <= 0) {
-        clearInterval() // 倒计时结束后停止计时器
-        this.onSubmit()
+        clearInterval(); // 倒计时结束后停止计时器
+        this.onSubmit();
       }
-    }, 1000)
+    }, 1000);
   },
   beforeUpdate() {},
   updated() {},
   destoryed() {},
   methods: {
-    
     inputChange(e) {
       this.$forceUpdate();
     },
@@ -230,21 +231,21 @@ export default {
       this.selected_onlineexam_id = this.$store.state.app.Examid;
       onlineExamApi.getPaperId(this.selected_onlineexam_id).then((response) => {
         this.paperid = response.data.paperid;
-      });
-      onlineExamApi.getPaperInfo(this.paperid).then((response) => {
-        this.questions = response.data.questions;
-        this.questions_sub = response.data.questionsSub;
-        //初始化答题卡
-        onlineExamApi
-          .getSheetId(this.user_id, this.selected_onlineexam_id)
-          .then((response) => {
-            this.sheetid = response.data.answersheetId;
-            onlineExamApi.getSheet(this.sheetid).then((response) => {
-              this.selectedOptions = response.data.objlist;
-              this.questions_sub[0].answer = response.data.sublist[0];
-              this.questions_sub[1].answer = response.data.sublist[1];
+        onlineExamApi.getPaperInfo(this.paperid).then((response) => {
+          this.questions = response.data.questions;
+          this.questions_sub = response.data.questionsSub;
+          //初始化答题卡
+          onlineExamApi
+            .getSheetId(this.user_id, this.selected_onlineexam_id)
+            .then((response) => {
+              this.sheetid = response.data.answersheetId;
+              onlineExamApi.getSheet(this.sheetid).then((response) => {
+                this.selectedOptions = response.data.objlist;
+                this.questions_sub[0].answer = response.data.sublist[0];
+                this.questions_sub[1].answer = response.data.sublist[1];
+              });
             });
-          });
+        });
       });
     },
     onSubmit() {
@@ -346,12 +347,17 @@ export default {
       this.selectedOption = this.selectedOptions[index];
       this.selected[index] = true;
       this.currentQuestionType = "subjective";
-    },formatTime(seconds) {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    const formattedTime = `${hours}:${minutes.toString().padStart(2, '0')}:${(seconds % 60).toString().padStart(2, '0')}`;
-    return formattedTime;
-  },
+    },
+    formatTime(seconds) {
+      const hours = Math.floor(seconds / 3600);
+      const minutes = Math.floor((seconds % 3600) / 60);
+      const formattedTime = `${hours}:${minutes.toString().padStart(2, "0")}:${(
+        seconds % 60
+      )
+        .toString()
+        .padStart(2, "0")}`;
+      return formattedTime;
+    },
   },
   fillter: {},
 };
@@ -431,10 +437,9 @@ export default {
   right: 10px;
 }
 .countdown-section {
-  
   text-align: right;
   font-weight: bold;
-  margin-right: 20px;font-size: 20px; /* 根据需要调整字体大小 */
-
+  margin-right: 20px;
+  font-size: 20px; /* 根据需要调整字体大小 */
 }
 </style>

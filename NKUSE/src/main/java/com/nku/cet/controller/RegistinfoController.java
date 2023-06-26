@@ -98,7 +98,7 @@ public class RegistinfoController {
         Registinfo record = registinfoService.getOne(wrapper);
         Integer answersheetId = record.getAnswersheetId();
         System.out.println(answersheetId);
-        if(answersheetId == 0) {
+        if(answersheetId == null ||answersheetId == 0  ) {
             res.put("HasAnswersheet", 0);
             res.put("answersheetId", 0);
         }
@@ -121,5 +121,13 @@ public class RegistinfoController {
         record.setAnswersheetId(reg.getAnswersheetId());
         registinfoService.update(record, wrapper);
         return Result.success("修改成功");
+    }
+
+    @GetMapping("/maxId")
+    public Result<Map<String, Object>> getMaximumRegistId() {
+        long maxRegistId = registinfoService.getBaseMapper().getMaximumRegistId();
+        Map<String, Object> res = new HashMap<>();
+        res.put("maximumRegistId", maxRegistId);
+        return Result.success(res);
     }
 }

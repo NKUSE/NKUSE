@@ -91,4 +91,12 @@ public class ObjQuesController {
         objQuesService.remove(wrapper);
         return Result.success("删除成功");
     }
+
+    @GetMapping("/maxId")
+    public Result<Map<String, Object>> getMaximumQuesId() {
+        long maxQuesId = objQuesService.getBaseMapper().getMaximumExamId();
+        Map<String, Object> res = new HashMap<>();
+        res.put("maximumQuesId", maxQuesId);
+        return Result.success(res);
+    }
 }
