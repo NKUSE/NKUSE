@@ -188,10 +188,17 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: '/stu_score_search/index',
-        name: 'Score_search',
+        path: '/stu_score_search',
+        name: 'index',
         component: () => import('@/views/stu_score_search/index'),
         meta: { title: '成绩查询', icon: 'marking' }
+      },
+      {
+        path: '/stu_score_search/ScorePage',
+        name: 'ScorePage',
+        hidden: true,
+        component: () => import('@/views/stu_score_search/ScorePage'),
+        meta: { title: '成绩信息查询', icon: 'search' }
       }
     ]
   }, 

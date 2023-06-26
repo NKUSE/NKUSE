@@ -144,4 +144,17 @@ public class RegistinfoController {
         registinfoService.save(reginfo);
         return Result.success("新增成功");
     }
+
+    @GetMapping("/getScore")
+    public Result<Map<String,Object>> getScore(@RequestParam("user_id") String user_id, @RequestParam("examid") Integer examid){
+        LambdaQueryWrapper<Registinfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Registinfo::getExamId, examid);
+        wrapper.eq(Registinfo::getUserId, user_id);
+        Map<String,Object> res = new HashMap<>();
+        Registinfo record = registinfoService.getOne(wrapper);
+        Float score = record.getScore();
+        System.out.println(score);
+        res.put("score",score);
+        return Result.success(res);
+    }
 }
