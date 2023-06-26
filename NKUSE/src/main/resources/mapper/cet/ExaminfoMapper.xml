@@ -22,4 +22,9 @@
         FROM cet6_examinfo
         WHERE exam_id IN (SELECT exam_id FROM cet6_registinfo WHERE user_id = #{userId});
     </select>
+    <select id="getByState" resultType="com.nku.cet.entity.Examinfo">
+        SELECT *
+        FROM cet6_examinfo
+        WHERE exam_state=1;
+    </select>
 </mapper>

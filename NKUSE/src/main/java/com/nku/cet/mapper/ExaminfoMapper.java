@@ -24,5 +24,7 @@ public interface ExaminfoMapper extends BaseMapper<Examinfo> {
     public void updateExamPaperIDToNull(String examId);
 
     public List<Examinfo> getByUserId(String examId);
+
+    public List<Examinfo> getByState();
 }
 

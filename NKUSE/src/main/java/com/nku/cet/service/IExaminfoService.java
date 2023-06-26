@@ -18,4 +18,6 @@ public interface IExaminfoService extends IService<Examinfo> {
     long getMaxId();
 
     Map<String, Object> getUserExams(String user_id);
+
+    Map<String, Object> getExamsbyState();
 }

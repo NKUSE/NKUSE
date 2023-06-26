@@ -94,11 +94,32 @@ export const asyncRoutes = [
     component: Layout,
     children: [
       {
-        path: 'index',
+        path: '/stu_sign_up',
         name: '在线报名',
         component: () => import('@/views/stu_sign_up/index'),
         meta: { title: '在线报名', icon: 'form' }
-      }
+      },
+      {
+        path: '/stu_sign_up/details',
+        name: 'details',
+        hidden: true,
+        component: () => import('@/views/stu_sign_up/details'),
+        meta: { title: '详细信息' }
+      },
+      {
+        path: '/stu_sign_up/detailsqq',
+        name: 'detailsqq',
+        hidden: true,
+        component: () => import('@/views/stu_sign_up/detailsqq'),
+        meta: { title: '资格信息查询' }
+      },
+      {
+        path: '/stu_sign_up/detailsqc',
+        name: 'detailsqc',
+        hidden: true,
+        component: () => import('@/views/stu_sign_up/detailsqc'),
+        meta: { title: '资格信息' }
+      },
     ]
   },
   {

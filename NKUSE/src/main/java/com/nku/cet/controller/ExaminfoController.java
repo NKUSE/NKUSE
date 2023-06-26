@@ -130,4 +130,13 @@ public class ExaminfoController {
         res.put("paperid", paperid);
         return Result.success("获取试卷id成功", res);
     }
+
+    @GetMapping("/getAllExams")
+    public Result<Map<String, Object>> getAllExams(){
+        Map<String, Object> data = examinfoService.getExamsbyState();
+        if(data != null) {
+            return Result.success("查询成功",data);
+        }
+        return Result.fail(20002, "无考试信息");
+    }
 }

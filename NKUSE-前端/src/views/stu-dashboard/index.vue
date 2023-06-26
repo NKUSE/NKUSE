@@ -29,7 +29,7 @@
               <div class="mores">
                 <a
                   class="link-style"
-                  href="http://localhost:6613/stu_sign_up/index#/stu_sign_up/index"
+                  href="http://localhost:6613/stu_sign_up/#/stu_sign_up"
                   >点击跳转&gt;&gt;</a
                 >
               </div>

@@ -1,114 +1,109 @@
 <template>
-  <div class="container" style="min-height: 100%; padding-bottom: 100px;">
-     
-     <el-header>
-        <div class="title-section">
-          <h1 class="title">全国英语六级考试-在线报名</h1>
-        </div>
-      </el-header>
-    <el-divider></el-divider>
-    <el-form
-      :model="ruleForm"
-      :rules="rules"
-      ref="ruleForm"
-      label-width="100px"
-      class="demo-border custom-form"
-    >
-      <el-form-item label="报考场次" prop="region">
-        <el-select v-model="ruleForm.region" placeholder="请选择报考场次">
-          <el-option label="第1届英语六级考试" value="1"></el-option>
-          <el-option label="第2届英语六级考试" value="2"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="学校名称">
-        <el-select v-model="formInline.region" placeholder="请选择学校名称">
-          <el-option label="南开大学" value="nk"></el-option>
-          <el-option label="天津大学" value="td"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="身份证号">
-        <el-input v-model="formInline.user" placeholder="请输入身份证号"></el-input>
-      </el-form-item>
-      <el-form-item label="电子邮箱">
-        <el-input v-model="formInline.phone" placeholder="请输入电子邮箱"></el-input>
-      </el-form-item>
-      <el-form-item label="手机号码">
-        <el-input v-model="formInline.email" placeholder="请输入手机号码"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitForm">立即报名</el-button>
-        <el-button @click="resetForm">重置</el-button>
-      </el-form-item>
-      
-    </el-form>
+  <div>
+    <div class="header">
+      <h1 class="title">全国大学生六级考试报名系统</h1>
+    </div>
+    <div class="card">
+      <div class="card-header">
+        <h2 class="card-title">欢迎使用CET考试报名系统</h2>
+      </div>
+      <div class="card-body">
+        <table class="info-table">
+          <thead>
+            <tr>
+              <th colspan="2">基本信息</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>考次名称：</td>
+              <td>2023年上半年CET考试</td>
+            </tr>
+            <tr>
+              <td>考点省份：</td>
+              <td>
+                <strong class="highlight">天津市（当前考点省份需为报名考点所在省份）</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>报名状态：</td>
+              <td>
+                <strong class="highlight">未报名（或当前通行证账号非报名时账号，或当前考点省份非报名时省份）</strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        <el-button type="primary" @click="onClick">开始报名</el-button>
+      </div>
+    </div>
   </div>
 </template>
-
 <script>
-  export default {
-    props: [],
-    components: {},
+export default {
     data() {
-      return {
-        formInline: {
-          id: "",
-          phone: "",
-          email: "",
-          region: "",
-        },
-        ruleForm: {
-          name: "",
-          region: "",
-          date1: "",
-          date2: "",
-          delivery: false,
-          type: [],
-          resource: "",
-          desc: "",
-        },
-        rules: {
-        },
-      }
+        return {}
     },
-    watch: {},
-    computed: {},
-    beforeCreate() {},
-    created() {},
-    beforeMount() {},
-    mounted() {},
-    beforeUpdate() {},
-    updated() {},
-    destoryed() {},
     methods: {
       request() {},
-      resetForm() {
-        this.$message({
-                message:response.message,
-                type:'success'
-              });
+      onClick() {
+        this.$router.push('/stu_sign_up/details')
       },
-      submitForm() {
-        console.log("submit!")
-      },
-    },
-    fillter: {},
-  }
+    }
+}
 </script>
-
 <style scoped>
-  .container{}
-  .title-section {
-  background-color: rgba(48, 65, 86, 0.8);
-  padding: 1px;
+.header {
+  background-color:  rgba(48, 65, 86, 0.8); /* 天青色 */
+  padding: 20px;
   text-align: center;
 }
 .title {
   color: white;
-  font-weight: bold;
 }
-  .demo-border { border: 1px grey dashed; min-height: 1rem; border-radius: 5px; }
-
-  .custom-form {
-  margin-top: 20px; /* 调整上边距 */
+.card {
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  margin: 20px auto;
+  width: 50%;
+}
+.card-header {
+  background-color:  rgba(48, 65, 86, 0.8); /* 天青色 */
+  color: white;
+  padding: 10px;
+}
+.card-title {
+  margin: 0;
+}
+.card-body {
+  padding: 20px;
+}
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.info-table th,
+.info-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+.card-footer {
+  padding: 10px;
+  text-align: center;
+}
+.start-button {
+  background-color:  rgba(48, 65, 86, 0.8); /* 红色 */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.highlight {
+  color: red; /* 红色 */
 }
 </style>

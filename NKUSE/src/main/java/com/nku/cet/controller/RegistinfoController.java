@@ -130,4 +130,18 @@ public class RegistinfoController {
         res.put("maximumRegistId", maxRegistId);
         return Result.success(res);
     }
+    @PostMapping("/signup")
+    public Result<?> signUp(@RequestBody Registinfo reginfo){
+        //reg.setRegistId("000002");
+        LambdaQueryWrapper<Registinfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Registinfo::getExamId, reginfo.getExamId());
+        wrapper.eq(Registinfo::getUserId,
+                reginfo.getUserId());
+        Registinfo record = registinfoService.getOne(wrapper);
+        if(record != null) {return Result.fail(20001,"请勿重复报名！");}
+        reginfo.setRoomId("1");
+        reginfo.setSeatNumber(1);
+        registinfoService.save(reginfo);
+        return Result.success("新增成功");
+    }
 }

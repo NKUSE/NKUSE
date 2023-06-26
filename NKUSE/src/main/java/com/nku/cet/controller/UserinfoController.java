@@ -134,4 +134,17 @@ public class UserinfoController {
         Map<String, Object> res = userinfoService.getUserAllInfo(userid);
         return Result.success(res);
     }
+    @GetMapping("/getUserId")
+    public Result<Map<String,Object>> getUserId(@RequestParam("idnum") String idnum){
+        LambdaQueryWrapper<Userinfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Userinfo::getUserIdnumber, idnum);
+        List<Map<String,Object>> data = new LinkedList<>();
+        Userinfo record = userinfoService.getOne(wrapper);
+        Map<String,Object> res=new HashMap<>();
+        if(record == null) {
+            return Result.fail(20001,"请输入正确的身份证号！（身份证号需在个人信息页面设置）");
+        }
+        res.put("userid",record.getUserId());
+        return Result.success(res);
+    }
 }

@@ -7,6 +7,7 @@ const state = {
   },
   device: 'desktop',
   Examid: 0,
+  Userid: 0,
 }
 
 const mutations = {
@@ -29,6 +30,9 @@ const mutations = {
   },
   SET_EXAMID: (state, value) => {
     state.Examid = value;
+  },
+  SET_USERID: (state,value) => {
+    state.Userid =value;
   }
 }
 
@@ -44,6 +48,9 @@ const actions = {
   },
   updateExamid({ commit }, value) {
     commit('SET_EXAMID', value);
+  },
+  updateUserid({commit},value) {
+    commit('SET_USERID',value);
   }
 }
 
