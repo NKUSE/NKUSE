@@ -139,4 +139,16 @@ public class ExaminfoController {
         }
         return Result.fail(20002, "无考试信息");
     }
+
+    @GetMapping("/getByState")
+    public Result<Map<String, Object>> getByState() {
+        Map<String, Object> res = examinfoService.getFinishedExams();
+        //LambdaQueryWrapper<Examinfo> wrapper = new LambdaQueryWrapper<>();
+        //wrapper.eq(Examinfo::getExamState, 4);
+
+        if(res != null) {
+            return Result.success("查询成功",res);
+        }
+        return Result.fail(20002, "无考试信息");
+    }
 }

@@ -2,10 +2,7 @@ package com.nku.cet.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.nku.cet.entity.*;
-import com.nku.cet.service.impl.AnswersheetServiceImpl;
-import com.nku.cet.service.impl.ExaminfoServiceImpl;
-import com.nku.cet.service.impl.ObjQuesServiceImpl;
-import com.nku.cet.service.impl.PaperinfoServiceImpl;
+import com.nku.cet.service.impl.*;
 import com.nku.common.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -35,6 +32,8 @@ public class AnswersheetController {
     PaperinfoServiceImpl paperinfoService;
     @Autowired
     ObjQuesServiceImpl objQuesService;
+    @Autowired
+    RegistinfoServiceImpl registinfoService;
     @PostMapping("/newAnswerSheet")
     public Result<Map<String, Object> > newAnswerSheet(@RequestBody Answersheet answersheet){
         answersheet.setScoreObj(-1.0f);
@@ -327,5 +326,45 @@ public class AnswersheetController {
         Map<String, Object> res = new HashMap<>();
         res.put("maximumSheetId", maxSheetId);
         return Result.success(res);
+    }
+
+    @GetMapping("/getSheetByExamId")
+    public Result<Map<String, Object>> getSheetByExamId(@RequestParam("examId")Integer examId) {
+        Map<String, Object> res = answersheetService.getSheetByExamId(examId);
+
+        if(res != null) {
+            return Result.success("调取答题卡成功",res);
+        }
+        return Result.fail(20002, "无答题卡信息");
+    }
+
+    @GetMapping("/updateScore")
+    public Result<Map<String, Object>> updateScore(@RequestParam("examId")Integer examId) {
+        //计算所有答题卡的成绩，更新对应的regist record
+        Map<String, Object> res = answersheetService.getAllSheetByExamId(examId);
+        int num = (int)res.get("total");
+        List<Answersheet> sheets = (List<Answersheet>)res.get("sheets");
+        for(int n = 0; n < num; n++) {
+            Float score = 0.0f;
+            Answersheet this_sheet = sheets.get(n);
+            score += this_sheet.getScoreObj();
+            score += this_sheet.getScoreTrans();
+            score += this_sheet.getScoreWriting();
+            //获取该答题卡对应的regist，更新该regist
+            LambdaQueryWrapper<Registinfo> wrapper = new LambdaQueryWrapper<>();
+            wrapper.eq(Registinfo::getExamId, examId);
+            wrapper.eq(Registinfo::getUserId, this_sheet.getUserId());
+            Registinfo registinfo = registinfoService.getOne(wrapper);
+            if(registinfo == null) continue;
+            registinfo.setScore(score);
+            registinfoService.update(registinfo, wrapper);
+        }
+        //将该exam状态置为4
+        LambdaQueryWrapper<Examinfo> wrapper2 = new LambdaQueryWrapper<>();
+        wrapper2.eq(Examinfo::getExamId, examId);
+        Examinfo examinfo = examinfoService.getOne(wrapper2);
+        examinfo.setExamState(4);
+        examinfoService.update(examinfo, wrapper2);
+        return Result.success("发布成绩成功");
     }
 }

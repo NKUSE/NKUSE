@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50738
 File Encoding         : 65001
 
-Date: 2023-06-26 15:20:03
+Date: 2023-06-29 08:11:46
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -23,7 +23,7 @@ CREATE TABLE `cet6_answersheet` (
   `answerSheet_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` varchar(255) DEFAULT NULL,
   `exam_id` varchar(255) DEFAULT NULL,
-  `answer_trans` varchar(255) DEFAULT NULL,
+  `answer_trans` varchar(550) DEFAULT NULL,
   `answer_writing` varchar(255) DEFAULT NULL,
   `answer_obj1` int(11) DEFAULT NULL,
   `answer_obj2` int(11) DEFAULT NULL,
@@ -52,17 +52,17 @@ CREATE TABLE `cet6_answersheet` (
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `exam_id` (`exam_id`) USING BTREE,
   CONSTRAINT `cet6_answersheet_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `cet6_userinfo` (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of cet6_answersheet
 -- ----------------------------
-INSERT INTO `cet6_answersheet` VALUES ('1', '000001', '00001', '翻译答案', '写作答案', '1', '1', '1', '1', '2', '3', '4', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '2', null, null, null);
 INSERT INTO `cet6_answersheet` VALUES ('8', '000001', '2', '12341111213231213213231321213wqe王企鹅111111231243122341134321434134234', '14334223434', '1', '0', '2', '3', '3', '2', '1', '0', '2', '2', '0', '1', '1', '2', '3', '0', '1', '1', '1', '2', '6', null, null);
 INSERT INTO `cet6_answersheet` VALUES ('9', '000001', '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '-1', null, null);
-INSERT INTO `cet6_answersheet` VALUES ('10', '000001', '1', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-INSERT INTO `cet6_answersheet` VALUES ('11', '000001', '3', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '-1', null, null);
+INSERT INTO `cet6_answersheet` VALUES ('11', '000001', '3', null, null, '2', '1', '2', '3', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '3', null, null);
 INSERT INTO `cet6_answersheet` VALUES ('12', '000001', '4', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '-1', null, null);
+INSERT INTO `cet6_answersheet` VALUES ('13', '000001', '1', 'Theme Of Exodus, also known as Exodus, is a magnificent and magnificent piece of music set against the historical story of Exodus in the Bible. The music begins with a solemn and solemn melody, and a shocking religious atmosphere is about to emerge. The rhythm of the music varies from high to slow, from strong to lyrical, like layers of flowing water, showcasing the high spirit of the Israeli nation and the praise of God. The echoes of history, the power of faith, and the cheers of the Israeli nation interweave and blend through time and space.', 'my name is lihua', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', null, null);
+INSERT INTO `cet6_answersheet` VALUES ('14', '000002', '1', 'answertran', 'wrt', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', null, null);
 
 -- ----------------------------
 -- Table structure for `cet6_enum_examstate`
@@ -250,7 +250,7 @@ CREATE TABLE `cet6_registinfo` (
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `room_id` (`room_id`) USING BTREE,
   KEY `answerSheet_id` (`answerSheet_id`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of cet6_registinfo
@@ -258,6 +258,8 @@ CREATE TABLE `cet6_registinfo` (
 INSERT INTO `cet6_registinfo` VALUES ('1', '0', '000001', '1', '1', '1', '9', null);
 INSERT INTO `cet6_registinfo` VALUES ('2', '4', '000001', '1', '1', '1', '12', null);
 INSERT INTO `cet6_registinfo` VALUES ('3', '3', '000001', '1', '1', '1', '11', null);
+INSERT INTO `cet6_registinfo` VALUES ('4', '1', '000001', '1', '1', '1', '13', null);
+INSERT INTO `cet6_registinfo` VALUES ('5', '1', '000002', '1', '1', '1', '14', null);
 INSERT INTO `cet6_registinfo` VALUES ('8', '4', '000002', '1', '1', '1', null, null);
 INSERT INTO `cet6_registinfo` VALUES ('9', '4', '000012', '1', '1', '1', null, null);
 

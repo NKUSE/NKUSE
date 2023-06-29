@@ -20,4 +20,6 @@ public interface IExaminfoService extends IService<Examinfo> {
     Map<String, Object> getUserExams(String user_id);
 
     Map<String, Object> getExamsbyState();
+
+    Map<String, Object> getFinishedExams();
 }

@@ -26,5 +26,7 @@ public interface ExaminfoMapper extends BaseMapper<Examinfo> {
     public List<Examinfo> getByUserId(String examId);
 
     public List<Examinfo> getByState();
+
+    public List<Examinfo> getByExamState(Integer state);
 }
 

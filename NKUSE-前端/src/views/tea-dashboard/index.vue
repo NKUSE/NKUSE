@@ -29,7 +29,7 @@
               <div class="mores">
                 <a
                   class="link-style"
-                  href="http://localhost:6613/#/teacher/marking"
+                  href="http://localhost:6613/#/tea_marking"
                   >点击跳转&gt;&gt;</a
                 >
               </div>

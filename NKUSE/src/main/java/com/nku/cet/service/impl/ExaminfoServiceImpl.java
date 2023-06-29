@@ -43,4 +43,13 @@ public class ExaminfoServiceImpl extends ServiceImpl<ExaminfoMapper, Examinfo> i
         map.put("exams",res);
         return map;
     }
+
+    @Override
+    public Map<String, Object>getFinishedExams() {
+        List<Examinfo> res = this.baseMapper.getByExamState(3);
+        Map<String, Object> map = new HashMap<>();
+        map.put("total", res.size());
+        map.put("exams", res);
+        return map;
+    }
 }

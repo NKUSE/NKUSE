@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.nku.cet.mapper.AnswersheetMapper">
-
+    <resultMap id="answersheetResultMap" type="com.nku.cet.entity.Answersheet">
+        <!-- 指定实体类中对应的字段和数据库中的列名映射 -->
+        <id property="answerSheetId" column="answerSheet_id"/>
+        <result property="userId" column="user_id"/>
+        <result property="examId" column="exam_id"/>
+        <result property="answerTrans" column="answer_trans"/>
+        <result property="answerWriting" column="answer_writing"/>
+        <result property="scoreTrans" column="score_trans"/>
+        <result property="scoreWriting" column="score_writing"/>
+        <!-- 添加其他字段映射 -->
+        <!-- ... -->
+    </resultMap>
+    <select id="getByExamId" parameterType="Integer" resultType="com.nku.cet.entity.Answersheet">
+        SELECT *
+        FROM cet6_answersheet
+        WHERE exam_id = #{examId} AND (score_trans IS NULL OR score_writing IS  NULL)
+    </select>
+    <select id="getAllByExamId" parameterType="Integer" resultType="com.nku.cet.entity.Answersheet">
+        SELECT *
+        FROM cet6_answersheet
+        WHERE exam_id = #{examId}
+    </select>
 </mapper>

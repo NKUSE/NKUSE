@@ -203,17 +203,24 @@ export const asyncRoutes = [
     ]
   }, 
   {
-    path: '/teacher',
+    path: '/tea_marking',
     component: Layout,
     meta: {
-      roles: ['tea']
+      roles: ['tea'], 
     },
     children: [
       {
-        path: 'marking',
-        name: 'marking',
+        path: '/tea_marking',
+        name: 'index',
         component: () => import('@/views/tea_marking/index'),
         meta: { title: '教师阅卷', icon: 'marking' }
+      },
+      {
+        path: '/tea_marking/marking',
+        name: 'marking',
+        component: () => import('@/views/tea_marking/marking'),
+        meta: { title: '阅卷页面', icon: 'marking2' },
+        hidden: true
       }
     ]
   },

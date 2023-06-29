@@ -27,4 +27,9 @@
         FROM cet6_examinfo
         WHERE exam_state=1;
     </select>
+    <select id="getByExamState" parameterType="Integer" resultType="com.nku.cet.entity.Examinfo">
+        SELECT *
+        FROM cet6_examinfo
+        WHERE exam_state = #{examState}
+    </select>
 </mapper>

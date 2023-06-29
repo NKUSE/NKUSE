@@ -98,7 +98,7 @@
               <div class="mores">
                 <a
                   class="link-style"
-                  href="http://localhost:6613/#/stu_score_search/index"
+                  href="http://localhost:6613/#/stu_score_search"
                   >点击跳转&gt;&gt;</a
                 >
               </div>
