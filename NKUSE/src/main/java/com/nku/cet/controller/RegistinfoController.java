@@ -98,6 +98,7 @@ public class RegistinfoController {
         Registinfo record = registinfoService.getOne(wrapper);
         Integer answersheetId = record.getAnswersheetId();
         System.out.println(answersheetId);
+        if(record.getPaid() == 0) {return Result.fail(20001,"未完成缴费，无法进入考试");}
         if(answersheetId == null ||answersheetId == 0  ) {
             res.put("HasAnswersheet", 0);
             res.put("answersheetId", 0);
@@ -156,5 +157,24 @@ public class RegistinfoController {
         System.out.println(score);
         res.put("score",score);
         return Result.success(res);
+    }
+
+    @GetMapping("/getRegist")
+    public Result<Map<String,Object>> getRegist(@RequestParam("userid") String userid, @RequestParam("examid") Integer examid){
+        LambdaQueryWrapper<Registinfo> wrapper = new LambdaQueryWrapper<>();
+        wrapper.eq(Registinfo::getUserId, userid);
+        wrapper.eq(Registinfo::getExamId, examid);
+        Registinfo record = registinfoService.getOne(wrapper);
+        Map<String,Object> record_map = new HashMap<>();
+        if(record != null){
+            record_map.put("registId",record.getRegistId());
+            record_map.put("userId",record.getUserId());
+            record_map.put("examId",record.getExamId());
+            record_map.put("roomId",record.getRoomId());
+            record_map.put("seatNumber",record.getSeatNumber());
+            record_map.put("paid",record.getPaid());
+            record_map.put("score",record.getScore());
+        }
+        return Result.success(record_map);
     }
 }

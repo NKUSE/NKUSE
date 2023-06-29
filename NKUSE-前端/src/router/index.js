@@ -132,14 +132,14 @@ export const asyncRoutes = [
       {
         path: '/stu_search/index',
         name: 'search',
-        component: () => import('@/views/stu_search/index2'),
+        component: () => import('@/views/stu_search/index'),
         meta: { title: '报考信息查询', icon: 'form' }
       },
       {
         path: '/stu_search/application_enquiry',
         name: 'search',
         hidden: true,
-        component: () => import('@/views/stu_search/index'),
+        component: () => import('@/views/stu_search/details'),
         meta: { title: '学生报考信息查询', icon: 'search' }
       }
     ]

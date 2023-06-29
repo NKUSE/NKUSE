@@ -1,104 +1,114 @@
+
+
+
 <template>
-  <div class="container" style="min-height: 100%; padding-bottom: 100px;">
-    <el-row :gutter="20">
-      <el-col :span="6"></el-col>
-      <el-col :span="2"></el-col>
-    </el-row>
-    <div v-for="(item, index) in examList" :key="index">
-      <el-card class="box-card" style="width: 900px; margin: auto; width: 120%;" >
-        <div slot="header" class="clearfix">
-          <span>第{{item.examination_id}}届全国大学英语六级考试</span>
-        </div>
-        <div class="text item">{{ "考试时间 : " + item.time }}</div>
-        <div class="text item">{{ "考试地点 : " + item.place }}</div>
-        <div class="text item">{{ "考场 : " + item.room }}</div>
-        <div class="text item">
-          {{ "座位号 : " + item.seat_num }}
-          <el-button type="primary" @click="onButtonClick" size="small" style="float: right;">查看信息</el-button>
-        </div>
-      </el-card>
-      <div style="padding-bottom: 20px;"> </div>
-      
-    </div>
+  <div
+    class="container"
+    style="min-height: 100%;
+    padding-bottom: 100,    margin-left: 50px;"
+  >
+    <el-button
+      type="info"
+      plain
+      size="small;"
+      style="min-height: 100%;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      margin-left: 10px;"
+      class="button2"
+      @click="turnback"
+    >返回首页</el-button>
+    <el-table
+      :show-header="false"
+      :data="tableData"
+      border
+      :cell-style="columnStyle"
+      style="width: 100%; margin-top: 10px"
+    > 
+      <el-table-column prop="name" align="center" />
+      <el-table-column prop="value" align="center" />
+    </el-table>
+    <message :show.sync="showFlag" />
+    <el-button
+      type="primary"
+      size="small;"
+      style="min-height: 100%;
+      margin-top: 20px;
+      margin-left: 10px;"
+      class="button1"
+      @click="onButtonClick"
+    >点击缴费</el-button>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-//import onlineExamApi from '@/api/online_exam'
-  export default {
-    data(){
-      return {
-        today: null,
-        active: 1,
-        num: 1,
-        total: 0,
-        examList: [
-          {
-          examination_id : "2",
-          time : "2023-05-22T20:00:00",
-          place : "南开大学",
-          room : "101",
-          seat_num : "01"
-          },{
-          examination_id : "1",
-          time : "2023-07-22T21:00:00",
-          place : "南开大学",
-          room : "102",
-          seat_num : "1"
-          }
-        ],
-        user_id: 0
+import message from './message'
+export default {
+  components: {
+    message
+  },
+  props: ['show'],
+  data() {
+    return {
+      showFlag: false,
+      tableData: [{
+        name: '姓名',
+        value: '南小开'
+      },
+      {
+        name: '身份证',
+        value: 'xxxxxx xxxx xxxx xxxx'
+      },
+      {
+        name: '考点信息',
+        value: '一个考点'
+      },
+      {
+        name: '考场ID',
+        value: 'xx'
+      },
+      {
+        name: '座位号',
+        value: '01'
+      },
+      {
+        name: '缴费状态',
+        value: '未缴费'
+      }]
+    }
+  },
+  computed: {},
+  watch: {},
+  beforeCreate() {},
+  created() {},
+  beforeMount() {},
+  mounted() {},
+  beforeUpdate() {},
+  updated() {},
+  destoryed() {},
+  methods: {
+    // 自定义列背景色
+    columnStyle({ row, column, rowIndex, columnIndex }) {
+      if (columnIndex === 0) {
+        // 修改每行第一个单元格的背景色
+        return 'background:#f3f6fc;'
+      } else {
+        return 'background:#ffffff;'
       }
     },
-    name: 'Online_test',
-    props: [],
-    components: {},
-    computed: {
-        ...mapGetters([
-            'id'
-        ]),
+    onButtonClick() {
+      this.showFlag = !this.showFlag
     },
-    watch: {},
-    beforeCreate() {},
-    created() {
-      //mapGetters
-      //this.getExams();
-    },
-    beforeMount() {},
-    mounted() {},
-    beforeUpdate() {},
-    updated() {},
-    destoryed() {},
-    methods: {
-      request() {},
-      onButtonClick() {
-        this.$router.push('/stu_search/application_enquiry')
-      },
-      getExams() {
-        onlineExamApi.getExams("000001").then(response => {
-          this.total = response.data.total
-          this.examList = response.data.exams
-        }
-        );
-      },
-      checkDate(date) {
-        const dateObj = new Date(date); // 将 date 变量转换为 Date 对象
-        const today = new Date();
-        return dateObj > today; // 判断 date 变量是否晚于今天的日期
-      },
-    },
-    fillter: {},
-  }
+    turnback() {
+      this.$router.push('/')
+    }
+  },
+  fillter: {}
+}
 </script>
 
 <style scoped>
-  .box-card{}
-  .clearfix{}
-  .text{}
-  .item { margin-top: 10px; margin-right: 40px; }
-  .container {
-    margin: auto;
-    width: 50%;
-  }
+  .button1{}
+  .button2{}
+  .container{}
 </style>
