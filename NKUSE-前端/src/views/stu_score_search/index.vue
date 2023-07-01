@@ -28,6 +28,9 @@
       </el-card>
       <div style="padding-bottom: 20px"></div>
     </div>
+    <div v-if="examList.length == 0">
+      <h1>未报名任何考试，请先前往报名！</h1>
+    </div>
   </div>
 </template>
 

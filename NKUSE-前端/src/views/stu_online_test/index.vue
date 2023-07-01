@@ -16,7 +16,7 @@
     <div v-for="(item, index) in examList" :key="index">
       <el-card
         class="box-card"
-        style="width: 900px; margin: auto; width: 120%; padding-bottom: 10px;"
+        style="width: 900px; margin: auto; width: 120%; padding-bottom: 10px"
       >
         <div slot="header" class="clearfix">
           <span>第{{ item.examId }}届全国大学英语六级考试</span>
@@ -25,16 +25,16 @@
         <div class="text item">{{ "考试时间 : " + item.examDate }}</div>
         <div class="text item">{{ "考试地点 : 线上考场" }}</div>
         <div class="text item" v-if="item.examState === 1">
-            {{"考试状态 : "}}<el-tag>未开始</el-tag>
+          {{ "考试状态 : " }}<el-tag>未开始</el-tag>
         </div>
         <div class="text item" v-if="item.examState === 2">
-            {{"考试状态 : "}}<el-tag type="success">考试中</el-tag>
+          {{ "考试状态 : " }}<el-tag type="success">考试中</el-tag>
         </div>
         <div class="text item" v-if="item.examState === 3">
-            {{"考试状态 : "}}<el-tag type="info">已结束</el-tag>
+          {{ "考试状态 : " }}<el-tag type="info">已结束</el-tag>
         </div>
         <div class="text item" v-if="item.examState === 4">
-            {{"考试状态 : "}}<el-tag type="info">已结束</el-tag>
+          {{ "考试状态 : " }}<el-tag type="info">已结束</el-tag>
         </div>
         <div class="text item">
           <el-button
@@ -48,6 +48,9 @@
         </div>
       </el-card>
       <div style="padding-bottom: 20px"></div>
+    </div>
+    <div v-if="examList.length == 0">
+      <h1>未报名任何考试，请先前往报名！</h1>
     </div>
   </div>
 </template>
@@ -86,7 +89,7 @@ export default {
   methods: {
     request() {},
     onButtonClick(examid) {
-      this.$store.dispatch('app/updateExamid', examid);
+      this.$store.dispatch("app/updateExamid", examid);
       this.$router.push("/stu_online_test/confirm");
     },
     getExams() {

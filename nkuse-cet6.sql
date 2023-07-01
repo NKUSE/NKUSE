@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50738
 File Encoding         : 65001
 
-Date: 2023-06-29 08:11:46
+Date: 2023-07-01 20:58:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -51,7 +51,8 @@ CREATE TABLE `cet6_answersheet` (
   PRIMARY KEY (`answerSheet_id`) USING BTREE,
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `exam_id` (`exam_id`) USING BTREE,
-  CONSTRAINT `cet6_answersheet_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `cet6_userinfo` (`user_id`)
+  CONSTRAINT `cet6_answersheet_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `cet6_userinfo` (`user_id`),
+  CONSTRAINT `cet6_answersheet_ibfk_2` FOREIGN KEY (`exam_id`) REFERENCES `cet6_examinfo` (`exam_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
@@ -59,10 +60,10 @@ CREATE TABLE `cet6_answersheet` (
 -- ----------------------------
 INSERT INTO `cet6_answersheet` VALUES ('8', '000001', '2', '12341111213231213213231321213wqe王企鹅111111231243122341134321434134234', '14334223434', '1', '0', '2', '3', '3', '2', '1', '0', '2', '2', '0', '1', '1', '2', '3', '0', '1', '1', '1', '2', '6', null, null);
 INSERT INTO `cet6_answersheet` VALUES ('9', '000001', '0', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '-1', null, null);
-INSERT INTO `cet6_answersheet` VALUES ('11', '000001', '3', null, null, '2', '1', '2', '3', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '3', null, null);
-INSERT INTO `cet6_answersheet` VALUES ('12', '000001', '4', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, '-1', null, null);
-INSERT INTO `cet6_answersheet` VALUES ('13', '000001', '1', 'Theme Of Exodus, also known as Exodus, is a magnificent and magnificent piece of music set against the historical story of Exodus in the Bible. The music begins with a solemn and solemn melody, and a shocking religious atmosphere is about to emerge. The rhythm of the music varies from high to slow, from strong to lyrical, like layers of flowing water, showcasing the high spirit of the Israeli nation and the praise of God. The echoes of history, the power of faith, and the cheers of the Israeli nation interweave and blend through time and space.', 'my name is lihua', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', null, null);
-INSERT INTO `cet6_answersheet` VALUES ('14', '000002', '1', 'answertran', 'wrt', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', null, null);
+INSERT INTO `cet6_answersheet` VALUES ('11', '000001', '3', null, null, '2', '1', '2', '3', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `cet6_answersheet` VALUES ('12', '000001', '4', null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+INSERT INTO `cet6_answersheet` VALUES ('13', '000001', '1', 'Theme Of Exodus, also known as Exodus, is a magnificent and magnificent piece of music set against the historical story of Exodus in the Bible. The music begins with a solemn and solemn melody, and a shocking religious atmosphere is about to emerge. The rhythm of the music varies from high to slow, from strong to lyrical, like layers of flowing water, showcasing the high spirit of the Israeli nation and the praise of God. The echoes of history, the power of faith, and the cheers of the Israeli nation interweave and blend through time and space.', 'my name is lihua', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '12', '12');
+INSERT INTO `cet6_answersheet` VALUES ('14', '000002', '1', 'answertran', 'wrt', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '12', '2');
 
 -- ----------------------------
 -- Table structure for `cet6_enum_examstate`
@@ -110,7 +111,9 @@ CREATE TABLE `cet6_examinfo` (
   `exam_time` datetime DEFAULT NULL,
   `exam_state` int(11) DEFAULT NULL,
   `exam_fee` float DEFAULT NULL,
-  PRIMARY KEY (`exam_id`) USING BTREE
+  PRIMARY KEY (`exam_id`) USING BTREE,
+  KEY `exam_state` (`exam_state`),
+  CONSTRAINT `cet6_examinfo_ibfk_1` FOREIGN KEY (`exam_state`) REFERENCES `cet6_enum_examstate` (`type`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
@@ -222,7 +225,46 @@ CREATE TABLE `cet6_paperinfo` (
   `question_Translating` varchar(255) DEFAULT NULL,
   `question_Writing` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`paper_id`) USING BTREE,
-  KEY `question_obj_1` (`question_obj1`) USING BTREE
+  KEY `question_obj_1` (`question_obj1`) USING BTREE,
+  KEY `cet6_paperinfo_ibfk_2` (`question_obj2`),
+  KEY `cet6_paperinfo_ibfk_3` (`question_obj3`),
+  KEY `cet6_paperinfo_ibfk_4` (`question_obj4`),
+  KEY `cet6_paperinfo_ibfk_5` (`question_obj5`),
+  KEY `cet6_paperinfo_ibfk_6` (`question_obj6`),
+  KEY `cet6_paperinfo_ibfk_7` (`question_obj7`),
+  KEY `cet6_paperinfo_ibfk_8` (`question_obj8`),
+  KEY `cet6_paperinfo_ibfk_9` (`question_obj9`),
+  KEY `cet6_paperinfo_ibfk_10` (`question_obj10`),
+  KEY `cet6_paperinfo_ibfk_11` (`question_obj11`),
+  KEY `cet6_paperinfo_ibfk_12` (`question_obj12`),
+  KEY `cet6_paperinfo_ibfk_13` (`question_obj13`),
+  KEY `cet6_paperinfo_ibfk_14` (`question_obj14`),
+  KEY `cet6_paperinfo_ibfk_15` (`question_obj15`),
+  KEY `cet6_paperinfo_ibfk_16` (`question_obj16`),
+  KEY `cet6_paperinfo_ibfk_17` (`question_obj17`),
+  KEY `cet6_paperinfo_ibfk_18` (`question_obj18`),
+  KEY `cet6_paperinfo_ibfk_19` (`question_obj19`),
+  KEY `cet6_paperinfo_ibfk_20` (`question_obj20`),
+  CONSTRAINT `cet6_paperinfo_ibfk_1` FOREIGN KEY (`question_obj1`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_10` FOREIGN KEY (`question_obj10`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_11` FOREIGN KEY (`question_obj11`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_12` FOREIGN KEY (`question_obj12`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_13` FOREIGN KEY (`question_obj13`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_14` FOREIGN KEY (`question_obj14`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_15` FOREIGN KEY (`question_obj15`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_16` FOREIGN KEY (`question_obj16`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_17` FOREIGN KEY (`question_obj17`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_18` FOREIGN KEY (`question_obj18`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_19` FOREIGN KEY (`question_obj19`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_2` FOREIGN KEY (`question_obj2`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_20` FOREIGN KEY (`question_obj20`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_3` FOREIGN KEY (`question_obj3`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_4` FOREIGN KEY (`question_obj4`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_5` FOREIGN KEY (`question_obj5`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_6` FOREIGN KEY (`question_obj6`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_7` FOREIGN KEY (`question_obj7`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_8` FOREIGN KEY (`question_obj8`) REFERENCES `cet6_obj_ques` (`question_id`),
+  CONSTRAINT `cet6_paperinfo_ibfk_9` FOREIGN KEY (`question_obj9`) REFERENCES `cet6_obj_ques` (`question_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
@@ -241,7 +283,7 @@ CREATE TABLE `cet6_registinfo` (
   `regist_id` int(255) NOT NULL AUTO_INCREMENT,
   `exam_id` varchar(255) NOT NULL,
   `user_id` varchar(255) NOT NULL,
-  `room_id` varchar(255) DEFAULT NULL,
+  `room_id` int(255) DEFAULT NULL,
   `seat_number` int(11) DEFAULT NULL,
   `paid` int(11) DEFAULT NULL,
   `answerSheet_id` varchar(255) DEFAULT NULL,
@@ -249,19 +291,23 @@ CREATE TABLE `cet6_registinfo` (
   PRIMARY KEY (`regist_id`),
   KEY `user_id` (`user_id`) USING BTREE,
   KEY `room_id` (`room_id`) USING BTREE,
-  KEY `answerSheet_id` (`answerSheet_id`) USING BTREE
+  KEY `answerSheet_id` (`answerSheet_id`) USING BTREE,
+  KEY `exam_id` (`exam_id`),
+  CONSTRAINT `cet6_registinfo_ibfk_1` FOREIGN KEY (`exam_id`) REFERENCES `cet6_examinfo` (`exam_id`),
+  CONSTRAINT `cet6_registinfo_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `cet6_userinfo` (`user_id`),
+  CONSTRAINT `cet6_registinfo_ibfk_3` FOREIGN KEY (`room_id`) REFERENCES `cet6_roominfo` (`room_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of cet6_registinfo
 -- ----------------------------
 INSERT INTO `cet6_registinfo` VALUES ('1', '0', '000001', '1', '1', '1', '9', null);
-INSERT INTO `cet6_registinfo` VALUES ('2', '4', '000001', '1', '1', '1', '12', null);
+INSERT INTO `cet6_registinfo` VALUES ('2', '4', '000001', '1', '1', '0', '12', null);
 INSERT INTO `cet6_registinfo` VALUES ('3', '3', '000001', '1', '1', '1', '11', null);
-INSERT INTO `cet6_registinfo` VALUES ('4', '1', '000001', '1', '1', '1', '13', null);
-INSERT INTO `cet6_registinfo` VALUES ('5', '1', '000002', '1', '1', '1', '14', null);
-INSERT INTO `cet6_registinfo` VALUES ('8', '4', '000002', '1', '1', '1', null, null);
-INSERT INTO `cet6_registinfo` VALUES ('9', '4', '000012', '1', '1', '1', null, null);
+INSERT INTO `cet6_registinfo` VALUES ('4', '1', '000001', '1', '1', '0', '13', null);
+INSERT INTO `cet6_registinfo` VALUES ('5', '1', '000002', '1', '1', '0', '14', null);
+INSERT INTO `cet6_registinfo` VALUES ('8', '4', '000002', '1', '1', '0', null, null);
+INSERT INTO `cet6_registinfo` VALUES ('9', '4', '000012', '1', '1', '0', null, null);
 
 -- ----------------------------
 -- Table structure for `cet6_roominfo`
