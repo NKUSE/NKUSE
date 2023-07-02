@@ -64,10 +64,9 @@
     <el-button
     v-if="this.registinfo.paid == 1"
       type="primary"
-      @click="onButtonClick()"
       size="big"
       style="float: right"
-      disabled=true
+      disabled="true"
       >已完成缴费</el-button
     >
     <el-dialog :title="title" :visible.sync="dialogFormVisible">

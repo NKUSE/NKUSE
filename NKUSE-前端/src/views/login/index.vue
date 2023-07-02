@@ -101,10 +101,10 @@
         <el-form-item
           label="证件号"
           :label-width="formLabelWidth"
-          prop="userIDnumber"
+          prop="userIdnumber"
         >
           <el-input
-            v-model="userForm.userIDnumber"
+            v-model="userForm.userIdnumber"
             autocomplete="off"
           ></el-input>
         </el-form-item>

@@ -140,6 +140,7 @@ export default {
       var temp  ={};
       temp.examId=this.selectedExamId;
       temp.userId=this.userid;
+      temp.paid=0;
       console.log(temp);
       signApi.signUp(temp).then(response => {
         this.$message({
